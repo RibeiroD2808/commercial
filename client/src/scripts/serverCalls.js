@@ -4,7 +4,8 @@ import axios from 'axios';
 const fetchData = async (endpoint ) => {
     try {
       const response = await axios.get('http://localhost:8000' + endpoint );
-      return response.data.products;
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       throw error;
     }
