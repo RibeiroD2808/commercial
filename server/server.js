@@ -11,8 +11,11 @@ app.use(cors());
 
 app.get('/', (req, res) => {
   const products = getProducts();
-  // Handle your API logic here
-  res.json({products});
+  
+  //sort array by addedDate
+  let latestProducts = products.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));  
+  latestProducts = latestProducts.slice(0,7);
+  res.json({products, latestProducts}); 
 });
 
 

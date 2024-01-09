@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import fetchData from '../scripts/serverCalls'; // Adjust the path accordingly
+import fetchData from '../scripts/serverCalls'; 
 import { Link } from 'react-router-dom';
+import Product from '../components/Product';
 
 function Home() {
-  const [data, setData] = useState([]);
+  const [latestProducts, setLatestProducts] = useState([]);
   const endpoint = '/';
   
   //get data from api using fetchDataAndSetState function inside serverCalls file
@@ -11,13 +12,13 @@ function Home() {
     async function fetchDataAndSetState() {
       
       const data = await fetchData(endpoint);
-      setData(data.products);
+      setLatestProducts(data.latestProducts);
     }
 
-    fetchDataAndSetState(); // Call the function inside useEffect
-  }, []); // Empty dependency array to run the effect only once
+    fetchDataAndSetState(); // call the function inside useEffect
+  }, []); 
 
-    const displayContent = data ? (
+    const displayContent = latestProducts ? (
       
       <div id="homeDiv">
         <h1>Home</h1>
@@ -25,12 +26,16 @@ function Home() {
           <div id='kitchenUtensilsDiv'>Kitchen Utensils </div>  
           <div id='hygieneCleaningDiv'> Hygiene and Cleaning</div>  
           <div id='packagingDiv'> <Link to="/packaging">Packaging</Link> </div>  
+        </div>
+        <div id='latestProductsDiv'>
+          <ul className='productsUl'>
+            {latestProducts.map((item) => (
+              <li key={item.productId}>
+                <Product product = {item}/>
+              </li>
+            ))}
+          </ul>
         </div>        
-        <ul>
-          {data.map((item) => (
-            <li key={item.id}>{item.category}</li>
-          ))}
-        </ul>
       </div>
       
     ) : null;

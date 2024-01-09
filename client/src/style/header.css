@@ -1,0 +1,8 @@
+#headerDiv{
+    background-color: bisque;
+}
+
+#headerLinksDiv{
+    display: flex;
+    gap: 10px;
+}

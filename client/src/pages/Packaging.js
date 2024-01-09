@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import fetchData from '../scripts/serverCalls'; // Adjust the path accordingly
+import fetchData from '../scripts/serverCalls'; 
+import '../style/main.css';
+import '../components/Header';
+import Header from '../components/Header.js';
 
 function Packaging(){
 
@@ -7,31 +10,37 @@ function Packaging(){
     const endpoint = '/packaging?category=packaging';
     
         
-     //get data from api using fetchDataAndSetState function inside serverCalls file
+    //get data from api using fetchDataAndSetState function inside serverCalls file
     useEffect(() => {
         async function fetchDataAndSetState() {
       
-      const data = await fetchData(endpoint);
-      setData(data.products);
-    }
+          const data =  await fetchData(endpoint);
+          setData(data.data);
+        }
 
-    fetchDataAndSetState(); // Call the function inside useEffect
-  }, []); // Empty dependency array to run the effect only once
+      fetchDataAndSetState(); // call the function inside useEffect
+    }, []);
 
-
-    
+    console.log(data);  
     const displayContent = data ? (
-      
-        <div id="homeDiv">
-          <h1>safsafas</h1>
+      <>
+        <Header />
+        <div id="packagingDiv">
+          <h1>Packaging</h1>
 
-          <ul>
+          <ul className='productsUl'>
             {data.map((item) => (
-              <li key={item.id}>{item.category}</li>
+              <li key={item.productId}>
+                  <div className='productDiv'>
+                    <p>{item.productName}</p>
+                    <p>{item.price}</p>
+                    <p>{item.brand}</p>
+                  </div>  
+              </li>
             ))}
           </ul>
         </div>
-        
+      </>
       ) : null;
   
   
