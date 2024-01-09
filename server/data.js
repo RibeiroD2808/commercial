@@ -1,6 +1,6 @@
 const products = [
   {
-    productId: 1,
+    id: 1,
     category: 'Kitchen Utensils',
     productName: 'ErgoGrip Precision Knife Set',
     brand: 'ErgoChef',
@@ -10,7 +10,7 @@ const products = [
     addedDate: '2023-05-15'
   },
   {
-    productId: 2,
+    id: 2,
     category: 'Kitchen Utensils',
     productName: 'Silicone Flexi-Whisk',
     brand: 'FlexiMix',
@@ -20,7 +20,7 @@ const products = [
     addedDate: '2023-07-22'
   },
   {
-    productId: 3,
+    id: 3,
     category: 'Kitchen Utensils',
     productName: 'Bamboo Fiber Cutting Boards Trio',
     brand: 'GreenChop',
@@ -30,7 +30,7 @@ const products = [
     addedDate: '2023-04-10'
   },
   {
-    productId: 4,
+    id: 4,
     category: 'Kitchen Utensils',
     productName: 'Collapsible Silicone Colander',
     brand: 'FlexiStore',
@@ -40,7 +40,7 @@ const products = [
     addedDate: '2023-08-05'
   },
   {
-    productId: 5,
+    id: 5,
     category: 'Kitchen Utensils',
     productName: 'Chef\'s Delight Spice Rack Carousel',
     brand: 'SpiceMaster',
@@ -50,7 +50,7 @@ const products = [
     addedDate: '2023-06-18'
   },
   {
-    productId: 6,
+    id: 6,
     category: 'Hygiene and Cleaning',
     productName: 'GermGuard Antibacterial Soap Dispenser',
     brand: 'CleanTech',
@@ -60,7 +60,7 @@ const products = [
     addedDate: '2023-03-02'
   },
   {
-    productId: 7,
+    id: 7,
     category: 'Hygiene and Cleaning',
     productName: 'Microfiber Magic Cleaning Cloths',
     brand: 'CleanSwipe',
@@ -70,7 +70,7 @@ const products = [
     addedDate: '2023-09-14'
   },
   {
-    productId: 8,
+    id: 8,
     category: 'Hygiene and Cleaning',
     productName: 'AutoFresh Toilet Bowl Deodorizer',
     brand: 'FreshScent',
@@ -80,7 +80,7 @@ const products = [
     addedDate: '2023-01-25'
   },
   {
-    productId: 9,
+    id: 9,
     category: 'Hygiene and Cleaning',
     productName: 'EcoClean All-Purpose Natural Cleaner',
     brand: 'GreenClean',
@@ -90,7 +90,7 @@ const products = [
     addedDate: '2023-11-30'
   },
   {
-    productId: 10,
+    id: 10,
     category: 'Hygiene and Cleaning',
     productName: 'NoStain Carpet and Upholstery Cleaner',
     brand: 'StainAway',
@@ -100,7 +100,7 @@ const products = [
     addedDate: '2023-02-12'
   },
   {
-    productId: 11,
+    id: 11,
     category: 'Packaging',
     productName: 'EcoWrap Sustainable Gift Wrap Set',
     brand: 'EcoGift',
@@ -110,7 +110,7 @@ const products = [
     addedDate: '2023-10-20'
   },
   {
-    productId: 12,
+    id: 12,
     category: 'Packaging',
     productName: 'FreshSeal Food Storage Containers',
     brand: 'FreshLock',
@@ -120,7 +120,7 @@ const products = [
     addedDate: '2023-07-01'
   },
   {
-    productId: 13,
+    id: 13,
     category: 'Packaging',
     productName: 'QuickZip Ziplock Bags Variety Pack',
     brand: 'ZipFresh',
@@ -130,7 +130,7 @@ const products = [
     addedDate: '2023-05-08'
   },
   {
-    productId: 14,
+    id: 14,
     category: 'Packaging',
     productName: 'BubbleGuard Fragile Item Packaging',
     brand: 'SafeShip',
@@ -140,7 +140,7 @@ const products = [
     addedDate: '2023-12-05'
   },
   {
-    productId: 15,
+    id: 15,
     category: 'Packaging',
     productName: 'KraftWave Biodegradable Takeout Containers',
     brand: 'EcoToGo',

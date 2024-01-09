@@ -23,10 +23,20 @@ app.get('/packaging', (req, res) => {
   const category = req.query.category;
 
   let data = getProducts();
-
   data = data.filter(item => item.category === 'Packaging');
-  console.log(data);
+
   res.json({data});
+});
+
+app.get('/product', (req, res) => {
+  const id = req.query.id;
+  
+  console.log("asfasf" + req.query.id);
+
+  let data = getProducts();
+  data = data.filter(item => item.id == id);
+  console.log(data);
+  res.json({ data });
 });
 
 app.listen(port, () => {

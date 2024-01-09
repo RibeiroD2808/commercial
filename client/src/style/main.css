@@ -3,13 +3,20 @@ li{
     list-style: none;
 }
 
-.productDiv{
-    display: flex;
-    flex-direction: column;
-}
 
+/*                  carousel.js */
 .productsUl{
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
+}
+
+.carouselDiv{
+    display: flex;
+}
+
+/*                  product.js */
+.productDiv{
+    display: flex;
+    flex-direction: column;
 }

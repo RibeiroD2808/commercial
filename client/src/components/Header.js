@@ -7,7 +7,7 @@ function Header(){
         <div id='headerDiv'>
             <div id='headerLinksDiv'>
                 <Link to='/'>Home</Link>
-                <Link to='/packaging'>Packaging</Link>
+                <Link to='/packaging?category=packaging'>Packaging</Link>
             </div>
         </div>
     );

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import fetchData from '../scripts/serverCalls'; 
-import '../style/main.css';
-import '../components/Header';
+import { useLocation } from 'react-router-dom';
+import fetchData from '../scripts/serverCalls.js'; 
+import '../components/Header.js';
 import Header from '../components/Header.js';
 
-function Packaging(){
+function PackagingPage(){
 
-    const [data, setData] = useState([]);
-    const endpoint = '/packaging?category=packaging';
     
-        
+    const category = new URLSearchParams(useLocation().search).get('category');
+    const endpoint = '/packaging?category=' + category;
+    const [data, setData] = useState([]);
+
     //get data from api using fetchDataAndSetState function inside serverCalls file
     useEffect(() => {
         async function fetchDataAndSetState() {
@@ -21,7 +22,6 @@ function Packaging(){
       fetchDataAndSetState(); // call the function inside useEffect
     }, []);
 
-    console.log(data);  
     const displayContent = data ? (
       <>
         <Header />
@@ -30,7 +30,7 @@ function Packaging(){
 
           <ul className='productsUl'>
             {data.map((item) => (
-              <li key={item.productId}>
+              <li key={item.id}>
                   <div className='productDiv'>
                     <p>{item.productName}</p>
                     <p>{item.price}</p>
@@ -47,4 +47,4 @@ function Packaging(){
       return displayContent;
 };
 
-export default Packaging;
+export default PackagingPage;
