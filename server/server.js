@@ -19,23 +19,32 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/packaging', (req, res) => {
+app.get('/category', (req, res) => {
   const category = req.query.category;
-
+  console.log("category" + category);
   let data = getProducts();
-  data = data.filter(item => item.category === 'Packaging');
+  data = data.filter(item => item.category === category);
 
   res.json({data});
 });
 
-app.get('/product', (req, res) => {
-  const id = req.query.id;
-  
-  console.log("asfasf" + req.query.id);
+
+app.get('/search', (req, res) => {
+  const search = req.query.search;
 
   let data = getProducts();
+  data = data.filter(item => item.description.includes(search) || item.productName.includes(search));
+
+  res.json({data});
+});
+
+
+app.get('/product', (req, res) => {
+  const id = req.query.id;
+  let data = getProducts();
+  
   data = data.filter(item => item.id == id);
-  console.log(data);
+
   res.json({ data });
 });
 

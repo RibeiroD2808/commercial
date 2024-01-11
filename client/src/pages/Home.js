@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import fetchData from '../scripts/serverCalls'; 
-import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 import Carousel from '../components/Carousel';
 import '../style/main.css';
 
@@ -20,20 +20,15 @@ function Home() {
   }, []); 
 
     const displayContent = latestProducts ? (
-      
-      <div id="homeDiv">
-        <h1>Home</h1>
-        <div id="categoriesDiv">
-          <div id='kitchenUtensilsDiv'>Kitchen Utensils </div>  
-          <div id='hygieneCleaningDiv'> Hygiene and Cleaning</div>  
-          <div id='packagingDiv'> <Link to="/packaging?category=packaging">Packaging</Link> </div>  
+      <>
+        <Header />
+        <div id="homeDiv">
+          <div id='latestProductsDiv'>
+            <Carousel products={latestProducts} productsPerPage={4} />  
+          </div> 
+          
         </div>
-        <div id='latestProductsDiv'>
-          <Carousel products={latestProducts} productsPerPage={4} />  
-        </div> 
-        
-      </div>
-      
+      </>
     ) : null;
 
 

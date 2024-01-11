@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import fetchData from '../scripts/serverCalls.js'; 
-import '../components/Header.js';
-import Header from '../components/Header.js';
+import Header from '../components/Header';
 
-function PackagingPage(){
+function SearchPage (){
 
+    const search = new URLSearchParams(useLocation().search).get('search');
+    const endpoint = '/search?search=' + search;
     
-    const category = new URLSearchParams(useLocation().search).get('category');
-    const endpoint = '/packaging?category=' + category;
     const [data, setData] = useState([]);
 
     //get data from api using fetchDataAndSetState function inside serverCalls file
@@ -22,13 +21,11 @@ function PackagingPage(){
       fetchDataAndSetState(); // call the function inside useEffect
     }, []);
 
-    const displayContent = data ? (
-      <>
+    const displayContent = (
+        <>
         <Header />
-        <div id="packagingDiv">
-          <h1>Packaging</h1>
-
-          <ul className='productsUl'>
+        {data ? 
+        <ul className='productsUl'>
             {data.map((item) => (
               <li key={item.id}>
                   <div className='productDiv'>
@@ -38,13 +35,12 @@ function PackagingPage(){
                   </div>  
               </li>
             ))}
-          </ul>
-        </div>
-      </>
-      ) : null;
-  
-  
-      return displayContent;
-};
+        </ul>
+        : null}
+        </>
+    );
 
-export default PackagingPage;
+    return displayContent;
+}
+
+export default SearchPage;
