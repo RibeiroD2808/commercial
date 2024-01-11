@@ -17,7 +17,7 @@ function PackagingPage(){
           const data =  await fetchData(endpoint);
           setData(data.data);
         }
-
+        
       fetchDataAndSetState(); // call the function inside useEffect
     }, [endpoint]);
 
