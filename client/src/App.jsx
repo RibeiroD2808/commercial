@@ -4,6 +4,9 @@ import Home from './pages/Home.js';
 import CategoryPage from './pages/CategoryPage.js';
 import ProductsPage from './pages/ProductPage.js';
 import SearchPage from './pages/SearchPage.js';
+import LoginPage from './pages/LoginPage.js';
+import RegisterPage from './pages/RegisterPage.js';
+
 function App() {
 
   return (
@@ -13,6 +16,8 @@ function App() {
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/product" element={<ProductsPage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   );

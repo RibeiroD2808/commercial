@@ -9,6 +9,8 @@ function Header(){
             <div id='headerSearchDiv'>
                 <Link to='/'>Home</Link>
                 <SearchBar />
+                <Link to='/login'>LogIn</Link>
+                <Link to='/register'>SignIn</Link>
             </div>    
             <div id='headerLinksDiv'>
                 <Link to='/category?category=Packaging'>Packaging</Link>

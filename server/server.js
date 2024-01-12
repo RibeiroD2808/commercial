@@ -1,13 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const { getProducts } = require('./data.js');
-
+const bodyParser = require('body-parser');
 // Enable CORS for all routes
 
 const app = express();
 const port = 8000; // or any other port you prefer
 
 app.use(cors());
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
   const products = getProducts();
@@ -46,6 +49,19 @@ app.get('/product', (req, res) => {
   data = data.filter(item => item.id == id);
 
   res.json({ data });
+});
+
+
+app.post('/login', (req, res) => {
+
+  console.log("dssdgsdg");
+  const { username, password } = req.body;
+
+  // Perform authentication or any other logic here
+  console.log('Received login data:', { username, password });
+
+  // Send a response back to the client
+  res.send('Login request received.');
 });
 
 app.listen(port, () => {
