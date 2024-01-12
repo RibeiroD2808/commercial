@@ -151,6 +151,15 @@ const products = [
   }
 ];
 
+const users = [
+  { username: 'user1', password: '1' },
+  { username: 'user2', password: '2' },
+  { username: 'user3', password: '3' },
+  { username: 'user4', password: '4' },
+  { username: 'user5', password: '5' },
+];
+
 module.exports = {
   getProducts: () => products,
+  getUsers: () => users
 };
