@@ -10,7 +10,7 @@ function RegisterPage( {product} ){
       password: '',
       confirmPassword: ''
     });
-
+    
     const [alertMessage, setAlertMessage] = useState('');
 
     //update data every time input change

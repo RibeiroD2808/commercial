@@ -23,7 +23,7 @@ function ProductPage(){
     const displayContent = data ? (
       <>
         <Header />
-        <div id="packagingDiv">
+        <div id="productDiv">
           <h1>Product</h1>
           <h2>{data.productName}</h2>
           <p>{data.category}</p>
