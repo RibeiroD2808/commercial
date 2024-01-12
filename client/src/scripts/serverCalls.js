@@ -16,7 +16,8 @@ const fetchData = async ( endpoint ) => {
 
 export const postData = async ( endpoint,  postData) => {
   try{
-    await axios.post('http://localhost:8000' + endpoint, postData);
+    const response = await axios.post('http://localhost:8000' + endpoint, postData);
+    return response.data;
   } catch (error){
     throw error;
   }
