@@ -17,12 +17,13 @@ function Header(){
                 <Link to='/login'>LogIn</Link>
                 <Link to='/register'>Register</Link>
                 <Link to='/cart'><FaShoppingCart /></Link>
+                {cart.length}
             </div>    
             <div id='headerLinksDiv'>
                 <Link to='/category?category=Packaging'>Packaging</Link>
                 <Link to='/category?category=Hygiene+and+Cleaning'>Hygiene Cleaning</Link>
                 <Link to='/category?category=Kitchen+Utensils'>Kitchen Utensils</Link>
-                {cart.length}
+                
             </div>
         </div>
     );
