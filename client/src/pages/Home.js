@@ -25,12 +25,10 @@ function Home() {
         <div id="homeDiv">
           <div id='latestProductsDiv'>
             <Carousel products={latestProducts} productsPerPage={4} />  
-          </div> 
-          
+          </div>           
         </div>
       </>
     ) : null;
-
 
     return displayContent;
 };

@@ -39,11 +39,11 @@ app.get('/search', (req, res) => {
 
 app.get('/product', (req, res) => {
   
-  const { id } = req.body;
-  let data = getProducts();
+  const id  = req.query.id;
   
+  let data = getProducts();
   data = data.filter(item => item.id == id);
-
+  console.log("safasf",data);
   res.json({ data });
 });
 
