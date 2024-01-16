@@ -1,36 +1,50 @@
 // context/CartContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useReducer } from 'react';
 
 const CartContext = createContext();
 
+const initialState = {
+  products: [],
+  quantities: []
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD':
+      //search for the index
+      const index = state.products.map(e => e.id).indexOf(action.payload.id);
+
+      //if dont have
+      if(index == -1){
+        return { ...state, 
+          products: [...state.products, action.payload],
+          quantities: [...state.quantities, 1] };
+      }else{
+
+        //update product quantity
+        const updatedQuantities = [...state.quantities];
+        updatedQuantities[index] += 1;
+
+        return { 
+            ...state,
+            quantities:updatedQuantities,
+        };
+      }
+      case 'REMOVE':
+        //NEED TO ADD REMOVE FUNCTION
+      return { count: state.count - action.payload };
+    default:
+      return state;
+  }
+};
+
+
 export function CartProvider({ children }) {
-    
-    const [cart, setCart] = useState([]);
-    const [cartCount, setCartCount] = useState(0);
 
-    //ADD VARIBALE TO COUNT ELEMENTS ON CART (RIGHT NOW IF A ELEMENT HAVE A QUANTITY OF 2 HE ONLY WILL COUNT AS 1 )
-    //DELETE CART FUNCTION (REDUCE I GUESS) 
+  //cart list  
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    
-
-    //add to the cart
-    function addToCart(product){
-        const existingProduct = cart.find((item) => item[0].id === product.id);
-        
-        if (existingProduct) {
-            //if the product already exists in the cart, update its quantity
-            setCart((prevCart) =>
-              prevCart.map((item) =>
-                item[0].id === product.id ? [item[0], item[1] + 1] : item
-              )
-            );
-          } else {
-            //if the product doesnt exist, add it to the cart with quantity 1
-            setCart((prevCart) => [...prevCart, [product, 1]]);
-          }
-    }
-
-    return <CartContext.Provider value={{ cart: cart, addToCart }}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ state, dispatch }}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {

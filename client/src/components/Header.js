@@ -7,7 +7,7 @@ import { useCart } from '../components/CartProvider.js';
 
 function Header(){
 
-    const { cart } = useCart();
+    const { state } = useCart();
 
     const displayContent = (
         <div id='headerDiv'>
@@ -17,7 +17,7 @@ function Header(){
                 <Link to='/login'>LogIn</Link>
                 <Link to='/register'>Register</Link>
                 <Link to='/cart'><FaShoppingCart /></Link>
-                {cart.length}
+                {state.quantities.reduce((partialSum, a) => partialSum + a, 0)}
             </div>    
             <div id='headerLinksDiv'>
                 <Link to='/category?category=Packaging'>Packaging</Link>

@@ -5,20 +5,19 @@ import Product from '../components/Product.js';
 
 function CartPage(){
 
-  const { cart } = useCart();
-
+  const { state } = useCart();
   const displayContent =  (
     <>
       <Header />
-      <ul >
-            {cart.map((item) => (
-              <li key={item[0].id}>
-                <p>{item[0].id}</p>
-                <p>{item[0].productName}</p>
-                <p>        |  {item[1]}</p>
-              </li>
+      {<ul >
+            {state.products.map((product, index) => (
+              <li key={product.id}>
+              <p>ID: {product.id}</p>
+              <p>Name: {product.productName}</p>
+              <p>Quantity: {state.quantities[index]}</p>
+            </li>
             ))}
-        </ul>
+        </ul>}
     </>
   )
 

@@ -5,7 +5,7 @@ import { useCart } from '../components/CartProvider';
 function Product( {product} ){
     
     
-    const { cart, addToCart } = useCart();
+    const { dispatch  } = useCart();
 
     const displayContent = (
         <li className='productDiv' key={product.id}>
@@ -15,7 +15,7 @@ function Product( {product} ){
                 <p>{product.brand}</p>
                 <p>{product.price}</p>
             </Link>
-            <button onClick={() => addToCart(product)}>Add</button>
+            <button onClick={() => dispatch({ type: 'ADD', payload: product })}>Add</button>
         </li>
     );
 
