@@ -1,14 +1,36 @@
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
 const { getProducts, getUsers } = require('./data.js');
 const bodyParser = require('body-parser');
 
 const app = express();
 const port = 8000; 
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your client-side URL
+  credentials: true,
+}));
+
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    name: 'your-custom-cookie-name',
+    cookie: {
+      domain: 'localhost',
+      sameSite: 'None',
+      secure: true, // Set to true for HTTPS
+      maxAge: 86400000,
+      httpOnly: true,
+    },
+  })
+);
+
 
 app.get('/', (req, res) => {
   const products = getProducts();
@@ -50,8 +72,8 @@ app.get('/product', (req, res) => {
 app.post('/login', (req, res) => {
   
   const { username, password } = req.body;
-  console.log('Received login data:', { username, password });
-  console.log(getUsers());
+  //NOW IS LOG IN EVERY TIME
+  res.status(200).send('Login successful');
 });
 
 app.post('/register', (req, res) => {
@@ -69,10 +91,18 @@ app.post('/register', (req, res) => {
   }
 });
 
+app.post('/update-cart', (req, res) => {
 
+  const { cart } = req.body;
 
+  // Initialize the cart in the session if it doesn't exist
+  req.session.cart = req.session.cart || [];
 
-
+  // Add the item to the cart
+  req.session.cart = cart;
+  console.log('Session:', req.session);
+  res.json({ success: true, cart: req.session.cart });
+});
 
 
 app.listen(port, () => {

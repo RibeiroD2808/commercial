@@ -14,7 +14,7 @@ function ProductPage(){
         async function fetchDataAndSetState() {
       
           const data =  await fetchData(endpoint);
-          setData(data.data[0]);
+          setData(data.data.data[0]);
         }
 
       fetchDataAndSetState(); // call the function inside useEffect

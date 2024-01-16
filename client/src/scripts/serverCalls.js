@@ -6,8 +6,8 @@ const fetchData = async ( endpoint ) => {
     try {
       const response = await axios.get('http://localhost:8000' + endpoint );
 
-      console.log("serverCall", response.data);
-      return response.data;
+      console.log("serverCall", response);
+      return response;
     } catch (error) {
       throw error;
     }
@@ -17,8 +17,11 @@ const fetchData = async ( endpoint ) => {
 
 export const postData = async ( endpoint,  postData) => {
   try{
-    const response = await axios.post('http://localhost:8000' + endpoint, postData);
-    return response.data;
+    const response = await axios.post('http://localhost:8000' + endpoint, postData, {
+      withCredentials: true, // Include credentials (cookies) with the request
+    });
+    console.log(document.cookie);
+    return response;
   } catch (error){
     throw error;
   }

@@ -13,7 +13,7 @@ function Home() {
     async function fetchDataAndSetState() {
       
       const data = await fetchData(endpoint);
-      setLatestProducts(data.latestProducts);
+      setLatestProducts(data.data.latestProducts);
     }
 
     fetchDataAndSetState(); // call the function inside useEffect

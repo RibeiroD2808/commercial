@@ -16,7 +16,7 @@ function CategoryPage(){
         async function fetchDataAndSetState() {
       
           const data =  await fetchData(endpoint);
-          setData(data.data);
+          setData(data.data.data);
         }
         
       fetchDataAndSetState(); // call the function inside useEffect

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { postData } from '../scripts/serverCalls.js'; 
+import { useNavigate  } from 'react-router-dom';
 
 function LoginPage( {product} ){
 
+    const navigate = useNavigate ();
     const [formData, setFormData] = useState({
       username: '',
       password: '',
@@ -27,7 +29,12 @@ function LoginPage( {product} ){
       try {
         
         const response = await postData('/login', formData);
-        console.log('Form submission successful');
+        console.log('Form submission successful', response.status);
+        
+        if (response.status === 200) {
+          console.log('Login successful');
+          navigate('/'); // Redirect to the home page
+        }
         
       } catch (error) {
         console.error('Form submission failed:', error);
@@ -45,7 +52,7 @@ function LoginPage( {product} ){
         </>
     );
 
-    return displayContent;
+  return displayContent;
 }
 
 export default LoginPage;
