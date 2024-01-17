@@ -6,7 +6,9 @@ const fetchData = async ( endpoint ) => {
     try {
       const response = await axios.get('http://localhost:8000' + endpoint );
 
-      console.log("serverCall", response);
+      console.log(endpoint);
+      //show reponse if inst the cart call
+      (endpoint != '/cart') && console.log("serverCall", response);
       return response;
     } catch (error) {
       throw error;
@@ -20,7 +22,6 @@ export const postData = async ( endpoint,  postData) => {
     const response = await axios.post('http://localhost:8000' + endpoint, postData, {
       withCredentials: true, // Include credentials (cookies) with the request
     });
-    console.log(document.cookie);
     return response;
   } catch (error){
     throw error;
