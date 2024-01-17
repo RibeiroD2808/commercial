@@ -14,7 +14,7 @@ function ProductPage(){
         async function fetchDataAndSetState() {
       
           const data =  await fetchData(endpoint);
-          setData(data.data[0]);
+          setData(data.data.data[0]);
         }
 
       fetchDataAndSetState(); // call the function inside useEffect
@@ -23,7 +23,7 @@ function ProductPage(){
     const displayContent = data ? (
       <>
         <Header />
-        <div id="packagingDiv">
+        <div id="productDiv">
           <h1>Product</h1>
           <h2>{data.productName}</h2>
           <p>{data.category}</p>

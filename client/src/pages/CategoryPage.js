@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import fetchData from '../scripts/serverCalls.js'; 
 import Header from '../components/Header.js';
+import Product from '../components/Product.js';
 
-function PackagingPage(){
+function CategoryPage(){
 
     
     const category = new URLSearchParams(useLocation().search).get('category');
@@ -15,7 +16,7 @@ function PackagingPage(){
         async function fetchDataAndSetState() {
       
           const data =  await fetchData(endpoint);
-          setData(data.data);
+          setData(data.data.data);
         }
         
       fetchDataAndSetState(); // call the function inside useEffect
@@ -24,18 +25,12 @@ function PackagingPage(){
     const displayContent = data ? (
       <>
         <Header />
-        <div id="packagingDiv">
-          <h1>Packaging</h1>
+        <div id="categoryDiv">
+          <h1>{category}</h1>
 
           <ul className='productsUl'>
             {data.map((item) => (
-              <li key={item.id}>
-                  <div className='productDiv'>
-                    <p>{item.productName}</p>
-                    <p>{item.price}</p>
-                    <p>{item.brand}</p>
-                  </div>  
-              </li>
+              <Product key={item.id} product={item}></Product>              
             ))}
           </ul>
         </div>
@@ -46,4 +41,4 @@ function PackagingPage(){
       return displayContent;
 };
 
-export default PackagingPage;
+export default CategoryPage;
