@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const { getProducts, getUsers } = require('./data.js');
 const bodyParser = require('body-parser');
 
@@ -12,24 +13,10 @@ app.use(cors({
   credentials: true,
 }));
 
+
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-    name: 'your-custom-cookie-name',
-    cookie: {
-      domain: 'localhost',
-      sameSite: 'None',
-      secure: true, // Set to true for HTTPS
-      maxAge: 86400000,
-      httpOnly: true,
-    },
-  })
-);
+app.use(cookieParser());
 
 
 app.get('/', (req, res) => {
@@ -95,14 +82,28 @@ app.post('/update-cart', (req, res) => {
 
   const { cart } = req.body;
 
-  // Initialize the cart in the session if it doesn't exist
-  req.session.cart = req.session.cart || [];
-
-  // Add the item to the cart
-  req.session.cart = cart;
-  console.log('Session:', req.session);
-  res.json({ success: true, cart: req.session.cart });
+  console.log(cart);
+  // Set the updated cart in the cookie
+  res.cookie('cart', cart, { maxAge: 3600000 }); // Cookie expires in 1 hour
+  
+  res.json({ success: true, cart }); 
 });
+
+app.get('/update-cart', (req, res) =>{
+  
+})
+
+app.get('/logout', function(req,res){
+  console.log("session logout");
+  console.log(req.session);
+  if (req.session) {
+    req.session.destroy();
+    res.clearCookie('your-custom-cookie-name');
+    res.send("Session Destroyed");
+  } else {
+    res.send("No session to destroy");
+  } 
+})
 
 
 app.listen(port, () => {

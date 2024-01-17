@@ -4,10 +4,32 @@ import SearchBar from '../components/SearchBar';
 import '../style/header.css'
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from '../components/CartProvider.js';
+import fetchData from '../scripts/serverCalls.js';
+import getCookie from '../scripts/getCookie.js';
 
 function Header(){
 
-    const { cart } = useCart();
+    const { cart, dispatch } = useCart();
+
+    useEffect(() => {
+        const updateCookie = setInterval(() => {
+            const cookieCart = getCookie('cart');
+            if (cookieCart && cookieCart != cart){
+                dispatch({ type: 'UPDATE', payload: cookieCart })
+                
+            }else{
+                console.log("its the same");
+            }
+        }, 1000);
+
+        return () => clearInterval(updateCookie);
+    }, [cart]);
+
+
+    const handleLogout = async () => {
+        const data = await fetchData("/logout");
+        // Add logic to handle the logout response if needed
+    };
 
     const displayContent = (
         <div id='headerDiv'>
@@ -18,6 +40,7 @@ function Header(){
                 <Link to='/register'>Register</Link>
                 <Link to='/cart'><FaShoppingCart /></Link>
                 {cart.quantities.reduce((partialSum, a) => partialSum + a, 0)}
+                <button onClick={handleLogout}> LogOut</button>
             </div>    
             <div id='headerLinksDiv'>
                 <Link to='/category?category=Packaging'>Packaging</Link>

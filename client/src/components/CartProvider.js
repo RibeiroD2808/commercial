@@ -1,10 +1,12 @@
 // context/CartContext.js
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { postData } from '../scripts/serverCalls';
+import getCookie from '../scripts/getCookie';
 
 const CartContext = createContext();
 
-const initialCart = {
+// if theres no cookie for the cart, start with an empty array
+const initialCart = getCookie('cart') ?? {
   products: [],
   quantities: []
 };
@@ -31,9 +33,11 @@ const reducer = (cart, action) => {
             quantities:updatedQuantities,
         };
       }
-      case 'REMOVE':
-        //NEED TO ADD REMOVE FUNCTION
-      return { count: cart.count - action.payload };
+    case 'UPDATE':
+      return action.payload
+    case 'REMOVE':
+      //NEED TO ADD REMOVE FUNCTION
+    return { count: cart.count - action.payload };
     default:
       return cart;
   }
@@ -48,10 +52,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     const updateSessionCart = async () => {
       try {
-
-        console.log(cart);
         const response = await postData('/update-cart', {cart});
-        console.log(response);
 
       } catch (error) {
         console.error('Error updating session cart:', error);
