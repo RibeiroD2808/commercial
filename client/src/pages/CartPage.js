@@ -7,21 +7,22 @@ import getCookie from '../scripts/getCookie.js';
 function CartPage(){
 
 
-  const { cart } = useCart();
+  const { cart, dispatch } = useCart();
   const displayContent =  (
     <>
       <Header />
-      {<ul >
-            {cart.products.map((product, index) => (
-              <li key={product.id}>
-              <p>ID: {product.id}</p>
-              <p>Name: {product.productName}</p>
-              <p>Quantity: {cart.quantities[index]}</p>
-            </li>
-            ))}
-        </ul>}
-        {}
-    </>
+      <ul >
+        {cart.products.map((product, index) => (
+          <li key={product.id}>
+            <p>ID: {product.id}</p>
+            <p>Name: {product.productName}</p>
+            <p>Quantity: {cart.quantities[index]}</p>
+            <button onClick={() => dispatch({ type: 'ADD', payload: product })}>+</button>
+            <button onClick={() => dispatch({ type: 'DELETE', payload: product })}>-</button>
+          </li>
+        ))}
+      </ul>
+      </>
   )
 
   return displayContent;

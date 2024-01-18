@@ -89,10 +89,6 @@ app.post('/update-cart', (req, res) => {
   res.json({ success: true, cart }); 
 });
 
-app.get('/update-cart', (req, res) =>{
-  
-})
-
 app.get('/logout', function(req,res){
   console.log("session logout");
   console.log(req.session);

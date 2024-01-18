@@ -12,10 +12,11 @@ const initialCart = getCookie('cart') ?? {
 };
 
 const reducer = (cart, action) => {
+  
+  //search for the index
+  const index = cart.products.map(e => e.id).indexOf(action.payload.id);
   switch (action.type) {
     case 'ADD':
-      //search for the index
-      const index = cart.products.map(e => e.id).indexOf(action.payload.id);
 
       //if dont have
       if(index == -1){
@@ -35,9 +36,26 @@ const reducer = (cart, action) => {
       }
     case 'UPDATE':
       return action.payload
-    case 'REMOVE':
-      //NEED TO ADD REMOVE FUNCTION
-    return { count: cart.count - action.payload };
+    case 'DELETE':
+      if( cart.quantities[index] == 1){ //if quantity is one, remove item
+        const updatedProducts = cart.products.filter(product => product.id !== action.payload.id);
+        const updatedQuantities = cart.quantities.filter((_, i) => i !== index);
+
+        return {
+          ...cart,
+          products: updatedProducts,
+          quantities: updatedQuantities,
+        };
+      } else {
+        //if the quantity is more than 1, decrement the quantity
+        const updatedQuantities = [...cart.quantities];
+        updatedQuantities[index] -= 1;
+    
+        return {
+          ...cart,
+          quantities: updatedQuantities,
+        };
+      }
     default:
       return cart;
   }
