@@ -14,6 +14,7 @@ function Home() {
       
       const data = await fetchData(endpoint);
       setLatestProducts(data.data.latestProducts);
+
     }
 
     fetchDataAndSetState(); // call the function inside useEffect

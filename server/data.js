@@ -1,3 +1,5 @@
+const session = require("express-session");
+
 const products = [
   {
     id: 1,
@@ -152,14 +154,22 @@ const products = [
 ];
 
 const users = [
-  { username: 'user1', password: '1' },
-  { username: 'user2', password: '2' },
-  { username: 'user3', password: '3' },
-  { username: 'user4', password: '4' },
-  { username: 'user5', password: '5' },
+  { id: 0, username: 'user1', password: '1' },
+  { id: 1, username: 'user2', password: '2' },
+  { id: 2, username: 'user3', password: '3' },
+  { id: 3, username: 'user4', password: '4' },
+  { id: 4, username: 'user5', password: '5' },
 ];
+
+const sessions = [
+  { userId: 0, sessionId: 0}
+]
 
 module.exports = {
   getProducts: () => products,
-  getUsers: () => users
+  getUsers: () => users,
+  getSessions: () => sessions,
+  setSession: (sessionData) => {
+    sessions.push(sessionData);
+  },
 };

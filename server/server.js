@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const { getProducts, getUsers } = require('./data.js');
+const { getProducts, getUsers, getSessions, setSession } = require('./data.js');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -18,19 +18,41 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+function generateRandomSessionId(length = 16) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let sessionId = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    sessionId += characters.charAt(randomIndex);
+  }
+
+  return sessionId;
+}
+
 
 app.get('/', (req, res) => {
   const products = getProducts();
   
+  const sessionId = req.headers['sessionid']; 
+
+  if(sessionId){
+    console.log(getSessions());
+    const userid = getSessions().find(session => session.sessionId === sessionId);
+    console.log(userid);
+    const username = getUsers().find(item => item.id === userid);
+    console.log(username);
+  }
+
   //sort array by addedDate
   let latestProducts = products.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));  
   latestProducts = latestProducts.slice(0,7);
+  
   res.json({products, latestProducts}); 
 });
 
 app.get('/category', (req, res) => {
   const category = req.query.category;
-  console.log("category" + category);
   let data = getProducts();
   data = data.filter(item => item.category === category);
 
@@ -52,15 +74,29 @@ app.get('/product', (req, res) => {
   
   let data = getProducts();
   data = data.filter(item => item.id == id);
-  console.log("safasf",data);
+
   res.json({ data });
 });
 
 app.post('/login', (req, res) => {
   
   const { username, password } = req.body;
+  user = getUsers().find(item => item.username === username);
+  
+  if(!user){
+    res.status(401).send('User Not Found');
+  }else if(user.password != password){
+    res.status(401).send('Wrong Password');
+  }else{
+    //NEED TO SAVE THIS ON DATA BASE
+    const randomSessionId = generateRandomSessionId();
+    setSession({userId: user.id, sessionId: randomSessionId})
+    res.cookie('sessionId', randomSessionId, { maxAge: 3600000 }); // Cookie expires in 1 hour
+    res.status(200).send('Login successful');
+  }
+
+
   //NOW IS LOG IN EVERY TIME
-  res.status(200).send('Login successful');
 });
 
 app.post('/register', (req, res) => {
@@ -82,7 +118,6 @@ app.post('/update-cart', (req, res) => {
 
   const { cart } = req.body;
 
-  console.log(cart);
   // Set the updated cart in the cookie
   res.cookie('cart', cart, { maxAge: 3600000 }); // Cookie expires in 1 hour
   
