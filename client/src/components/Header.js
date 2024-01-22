@@ -14,9 +14,9 @@ function Header(){
     useEffect(() => {
         const updateCookie = setInterval(() => {
             const cookieCart = getCookie('cart');
+            //id cart save on cookie its the same as client cart
             if (cookieCart && cookieCart != cart){
-                dispatch({ type: 'UPDATE', payload: cookieCart })
-                
+                dispatch({ type: 'UPDATE', payload: cookieCart });
             }else{
                 console.log("its the same");
             }
@@ -36,11 +36,17 @@ function Header(){
             <div id='headerSearchDiv'>
                 <Link to='/'>Home</Link>
                 <SearchBar />
-                <Link to='/login'>LogIn</Link>
-                <Link to='/register'>Register</Link>
+                
                 <Link to='/cart'><FaShoppingCart /></Link>
                 {cart.quantities.reduce((partialSum, a) => partialSum + a, 0)}
-                <button onClick={handleLogout}> LogOut</button>
+                {document.cookie.includes('sessionId') ? (
+                    <button onClick={handleLogout}>LogOut</button>
+                ) : (
+                    <>
+                    <Link to='/login'>LogIn</Link>
+                    <Link to='/register'>Register</Link>
+                    </>
+                )}
             </div>    
             <div id='headerLinksDiv'>
                 <Link to='/category?category=Packaging'>Packaging</Link>

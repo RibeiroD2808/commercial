@@ -1,5 +1,5 @@
 // context/CartContext.js
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, { createContext, useState, useContext, useEffect, useReducer } from 'react';
 import { postData } from '../scripts/serverCalls';
 import getCookie from '../scripts/getCookie';
 

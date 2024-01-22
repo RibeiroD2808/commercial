@@ -5,40 +5,41 @@ import Header from '../components/Header.js';
 import Product from '../components/Product.js';
 
 function CategoryPage(){
+  
+  const category = new URLSearchParams(useLocation().search).get('category');
+  const endpoint = '/category?category=' + category;
+  const [data, setData] = useState([]);
 
+  //get data from api using fetchDataAndSetState function inside serverCalls file
+  useEffect(() => {
+      async function fetchDataAndSetState() {
     
-    const category = new URLSearchParams(useLocation().search).get('category');
-    const endpoint = '/category?category=' + category;
-    const [data, setData] = useState([]);
-
-    //get data from api using fetchDataAndSetState function inside serverCalls file
-    useEffect(() => {
-        async function fetchDataAndSetState() {
+        const data =  await fetchData(endpoint);
+        setData(data.data.data);
+      }
       
-          const data =  await fetchData(endpoint);
-          setData(data.data.data);
-        }
-        
-      fetchDataAndSetState(); // call the function inside useEffect
-    }, [endpoint]);
+    fetchDataAndSetState(); // call the function inside useEffect
+  }, [endpoint]);
 
-    const displayContent = data ? (
-      <>
-        <Header />
-        <div id="categoryDiv">
-          <h1>{category}</h1>
+  const displayContent = data ? (
+    <>
+      <Header />
+      <div id="filterDiv">
+        price
+      </div>
+      <div id="categoryDiv">
+        <h1>{category}</h1>
+        <ul className='productsUl'>
+          {data.map((item) => (
+            <Product key={item.id} product={item}></Product>              
+          ))}
+        </ul>
+      </div>
+    </>
+  ) : null;
 
-          <ul className='productsUl'>
-            {data.map((item) => (
-              <Product key={item.id} product={item}></Product>              
-            ))}
-          </ul>
-        </div>
-      </>
-      ) : null;
-  
-  
-      return displayContent;
+
+  return displayContent;
 };
 
 export default CategoryPage;

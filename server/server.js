@@ -35,27 +35,27 @@ app.get('/', (req, res) => {
   const products = getProducts();
   
   const sessionId = req.headers['sessionid']; 
-
+  let userName = '';
   if(sessionId){
-    console.log(getSessions());
-    const userid = getSessions().find(session => session.sessionId === sessionId);
-    console.log(userid);
-    const username = getUsers().find(item => item.id === userid);
-    console.log(username);
+    console.log("/", getSessions());
+    const user = getSessions().find(session => session.sessionId === sessionId);
+    console.log("userId:", user);
+    userName = (getUsers().find(item => item.id === user.userId)).username;
+    console.log(userName);
   }
 
   //sort array by addedDate
   let latestProducts = products.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));  
   latestProducts = latestProducts.slice(0,7);
   
-  res.json({products, latestProducts}); 
+  res.json({products, latestProducts, userName}); 
 });
 
 app.get('/category', (req, res) => {
   const category = req.query.category;
   let data = getProducts();
   data = data.filter(item => item.category === category);
-
+  
   res.json({data});
 });
 
@@ -90,8 +90,9 @@ app.post('/login', (req, res) => {
   }else{
     //NEED TO SAVE THIS ON DATA BASE
     const randomSessionId = generateRandomSessionId();
-    setSession({userId: user.id, sessionId: randomSessionId})
-    res.cookie('sessionId', randomSessionId, { maxAge: 3600000 }); // Cookie expires in 1 hour
+    //setSession({userId: user.id, sessionId: randomSessionId});
+    console.log(getSessions());
+    res.cookie('sessionId', 'ms4EubBCJ'); //randomSessionId, { maxAge: 3600000 }); // Cookie expires in 1 hour
     res.status(200).send('Login successful');
   }
 

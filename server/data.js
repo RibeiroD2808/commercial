@@ -162,7 +162,8 @@ const users = [
 ];
 
 const sessions = [
-  { userId: 0, sessionId: 0}
+  { userId: 10, sessionId: 10},
+  { userId:0, sessionId: 'ms4EubBCJ'}
 ]
 
 module.exports = {
