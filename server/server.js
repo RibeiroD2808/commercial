@@ -53,9 +53,23 @@ app.get('/', (req, res) => {
 
 app.get('/category', (req, res) => {
   const category = req.query.category;
-  let data = getProducts();
-  data = data.filter(item => item.category === category);
+  const priceMin = req.query.priceMin;
+  const priceMax = req.query.priceMax;
   
+  let data = getProducts();
+  data = data.filter(item => {
+    // Assuming 'category' and 'price' are properties of each item in 'data'
+    const isCategoryMatch = item.category === category;
+  
+    // Check if priceMin and priceMax are defined, and if so, filter based on the price range
+    const isPriceInRange =
+      (priceMin === undefined || item.price >= priceMin) &&
+      (priceMax === undefined || item.price <= priceMax);
+  
+    // Return true only if both category and price conditions are met
+    return isCategoryMatch && isPriceInRange;
+  });
+
   res.json({data});
 });
 
