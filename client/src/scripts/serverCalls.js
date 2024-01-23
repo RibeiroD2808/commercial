@@ -5,7 +5,7 @@ import getCookie from './getCookie';
 const fetchData = async ( endpoint ) => {
   
   const session = getCookie('sessionId');
-  console.log(session);
+  console.log("Session",session);
   try {
     const response = await axios.get('http://localhost:8000' + endpoint, {
       headers: {
