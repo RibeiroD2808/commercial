@@ -4,7 +4,6 @@ import fetchData from '../scripts/serverCalls.js';
 import Header from '../components/Header.js';
 import Product from '../components/Product.js';
 import DualSlider from '../components/DualSlider.js';
-import { FaCodeBranch } from 'react-icons/fa';
 
 function CategoryPage(){
   
@@ -33,7 +32,11 @@ function CategoryPage(){
       newEndPoint += '&maxPrice=' + priceRange.max;
     }
     if(brandsList !== undefined){
-      
+      Object.entries(brandsList).map(([brand, {count, selected}]) => {
+        if(selected == true){
+          newEndPoint += '&brand=' + brand;
+        }
+      })
     }
 
     setEndPoint(newEndPoint);
@@ -47,26 +50,27 @@ function CategoryPage(){
       setData(response.data.data);
       
       if(firstRender){
-      // create an array with brands and their respective counters.
-      setBrandsList( response.data.data.reduce((acc, item) => {
+        // create an array with brands and their respective counters.
+        setBrandsList( response.data.data.reduce((acc, item) => {
+          
+          const brand = item.brand;
+          
+          //increment count for the brand or initialize to 1 if it doesn't exist
+          acc[brand] = { count: (acc[brand] ? acc[brand].count + 1 : 1), selected: false};
+          return acc;
+        }, {}))
+        setFirstRender(false);
         
-        const brand = item.brand;
-        
-        //increment count for the brand or initialize to 1 if it doesn't exist
-        acc[brand] = { count: (acc[brand] && acc[brand].count) || 0 + 1, selected: false};
-        return acc;
-      }, {}))
-      setFirstRender(false);
-      }
-      const prices = response.data.data.map(item => item.price);
-      
-      //get the minimum and maximum price 
-      
-      const minPrice = Math.min(...prices);
-      const maxPrice = Math.max(...prices);
+        const prices = response.data.data.map(item => item.price);
 
-      setStartPriceRange({ min: minPrice, max: maxPrice });
-      setPriceRange({ min: minPrice, max: maxPrice });
+        //get the minimum and maximum price 
+        
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+
+        setStartPriceRange({ min: minPrice, max: maxPrice });
+        setPriceRange({ min: minPrice, max: maxPrice });
+      }
     }
     
     fetchDataAndSetState(); // call the function inside useEffect
@@ -74,21 +78,34 @@ function CategoryPage(){
 
   const handleBrandCheckboxChange = (selectedBrand) => {
     setBrandsList((prevBrandsList) => {
-      //list copy
-      const updatedBrandsList = { ...prevBrandsList };
-      //toogle select
-      updatedBrandsList[selectedBrand] = { ...updatedBrandsList[selectedBrand], selected: !updatedBrandsList[selectedBrand].selected };
-      console.log(updatedBrandsList);
-      return updatedBrandsList;
+      return {
+        ...prevBrandsList,
+        [selectedBrand]: {
+          ...prevBrandsList[selectedBrand],
+          selected: !prevBrandsList[selectedBrand].selected,
+        },
+      };
     });
   };
+
+  const handleResetButton = () => {
+    setPriceRange(startPriceRange); 
+    setBrandsList((prevBrandsList) => {
+      // Reset the selected property for all brands
+      const updatedBrandsList = { ...prevBrandsList };
+      Object.keys(updatedBrandsList).forEach((brand) => {
+        updatedBrandsList[brand].selected = false;
+      });
+      return updatedBrandsList;
+    });
+    };
 
   const displayContent = data ? (
     <>
       <Header />
       <div id="categoryDiv">
         <h1>{category}</h1>
-        { startPriceRange && startPriceRange.min !== undefined ?  
+        { startPriceRange && startPriceRange.min !== undefined && startPriceRange.max !== undefined ?  
           <div id="filterDiv">
             <DualSlider
               startPrice= {startPriceRange}
@@ -105,6 +122,7 @@ function CategoryPage(){
                 ))}
               </div>
             </div>
+            <button onClick={handleResetButton}>X</button> 
           </div> : null
         }
         <ul className='productsUl'>

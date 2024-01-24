@@ -65,7 +65,7 @@ const products = [
     id: 7,
     category: 'Hygiene and Cleaning',
     productName: 'Microfiber Magic Cleaning Cloths',
-    brand: 'CleanSwipe',
+    brand: 'CleanTech',
     description: 'Ultra-absorbent and lint-free microfiber cloths for streak-free cleaning on various surfaces.',
     price: 12.99,
     quantity: 300,
