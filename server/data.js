@@ -166,6 +166,14 @@ const sessions = [
   { userId:0, sessionId: 'ms4EubBCJ'}
 ]
 
+function deleteSession(sessionId){
+  const index = sessions.findIndex((session) => session.sessionId === sessionId);
+  if (index !== -1) {
+    sessions.splice(index, 1);
+  }
+}
+
+
 module.exports = {
   getProducts: () => products,
   getUsers: () => users,
@@ -173,4 +181,6 @@ module.exports = {
   setSession: (sessionData) => {
     sessions.push(sessionData);
   },
+  deleteSession,
+
 };

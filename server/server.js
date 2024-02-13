@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const { getProducts, getUsers, getSessions, setSession } = require('./data.js');
+const { getProducts, getUsers, getSessions, setSession, deleteSession } = require('./data.js');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -12,8 +11,7 @@ app.use(cors({
   origin: 'http://localhost:3000', // Replace with your client-side URL
   credentials: true,
 }));
-
-
+    
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -31,10 +29,12 @@ function generateRandomSessionId(length = 16) {
 }
 
 
+
 app.get('/', (req, res) => {
   const products = getProducts();
   
-  const sessionId = req.headers['sessionid']; 
+  const sessionId = req.headers['sessionId']; 
+
   let userName = '';
   if(sessionId){
     console.log("/", getSessions());
@@ -42,6 +42,7 @@ app.get('/', (req, res) => {
     console.log("userId:", user);
     userName = (getUsers().find(item => item.id === user.userId)).username;
     console.log(userName);
+  
   }
 
   //sort array by addedDate
@@ -53,23 +54,32 @@ app.get('/', (req, res) => {
 
 app.get('/category', (req, res) => {
   const category = req.query.category;
-  const priceMin = req.query.priceMin;
-  const priceMax = req.query.priceMax;
+  const priceMin = req.query.minPrice;
+  const priceMax = req.query.maxPrice;
+
+  const brands = Array.isArray(req.query.brand) ? req.query.brand : [req.query.brand];
+  console.log(brands);
   
   let data = getProducts();
+
   data = data.filter(item => {
-    // Assuming 'category' and 'price' are properties of each item in 'data'
+
     const isCategoryMatch = item.category === category;
-  
-    // Check if priceMin and priceMax are defined, and if so, filter based on the price range
+    
+    //check if priceMin and priceMax are defined, and if so, filter based on the price range
     const isPriceInRange =
       (priceMin === undefined || item.price >= priceMin) &&
       (priceMax === undefined || item.price <= priceMax);
-  
-    // Return true only if both category and price conditions are met
-    return isCategoryMatch && isPriceInRange;
+    
+    const brandFilter = brands && brands[0] == undefined ? true : brands.some((brand) => item.brand === brand);
+    
+    console.log(item.productName);
+    console.log("               price", isPriceInRange);
+    console.log("                                       brand",brands.some((brand) => item.brand === brand));
+    //return true only if both category and price conditions are met
+    return isCategoryMatch && isPriceInRange && brandFilter;
   });
-
+  console.log(data);
   res.json({data});
 });
 
@@ -104,9 +114,12 @@ app.post('/login', (req, res) => {
   }else{
     //NEED TO SAVE THIS ON DATA BASE
     const randomSessionId = generateRandomSessionId();
-    //setSession({userId: user.id, sessionId: randomSessionId});
     console.log(getSessions());
-    res.cookie('sessionId', 'ms4EubBCJ'); //randomSessionId, { maxAge: 3600000 }); // Cookie expires in 1 hour
+    
+    res.cookie('sessionId', randomSessionId, { maxAge: 3600000, path: '/', domain: 'localhost'}); //randomSessionId, { maxAge: 3600000 }); // Cookie expires in 1 hour
+    //saved on file data.js need to be saved on data base early
+    setSession({ userId:user.id, sessionId:randomSessionId});
+    console.log(getSessions());
     res.status(200).send('Login successful');
   }
 
@@ -139,17 +152,15 @@ app.post('/update-cart', (req, res) => {
   res.json({ success: true, cart }); 
 });
 
-app.get('/logout', function(req,res){
-  console.log("session logout");
-  console.log(req.session);
-  if (req.session) {
-    req.session.destroy();
-    res.clearCookie('your-custom-cookie-name');
-    res.send("Session Destroyed");
-  } else {
-    res.send("No session to destroy");
-  } 
-})
+app.post('/logout', function(req, res) {
+  console.log("logOut");
+  const { sessionId } = req.body;
+  deleteSession(sessionId);
+  console.log(getSessions());
+
+  res.redirect('/');
+});
+
 
 
 app.listen(port, () => {

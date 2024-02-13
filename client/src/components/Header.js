@@ -4,8 +4,9 @@ import SearchBar from '../components/SearchBar';
 import '../style/header.css'
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from '../components/CartProvider.js';
-import fetchData from '../scripts/serverCalls.js';
+import fetchData, { postData } from '../scripts/serverCalls.js';
 import getCookie from '../scripts/getCookie.js';
+import axios from 'axios';
 
 function Header(){
 
@@ -27,11 +28,18 @@ function Header(){
 
 
     const handleLogout = async () => {
-        const data = await fetchData("/logout");
-        // Add logic to handle the logout response if needed
+        const sessionCookie = getCookie('sessionId');
+        
+        try {
+          //await axios.post('http://localhost:8000/logout', { sessionId : sessionCookie});
+          postData('/logout',{ sessionId : sessionCookie});
+          document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        } catch (error) {
+          console.error('Logout failed:', error.message);
+        }
     };
 
-    const displayContent = (
+    const displayContent = (       
         <div id='headerDiv'>
             <div id='headerSearchDiv'>
                 <Link to='/'>Home</Link>
@@ -43,8 +51,8 @@ function Header(){
                     <button onClick={handleLogout}>LogOut</button>
                 ) : (
                     <>
-                    <Link to='/login'>LogIn</Link>
-                    <Link to='/register'>Register</Link>
+                        <Link to='/login'>LogIn</Link>
+                        <Link to='/register'>Register</Link>
                     </>
                 )}
             </div>    
@@ -52,7 +60,6 @@ function Header(){
                 <Link to='/category?category=Packaging'>Packaging</Link>
                 <Link to='/category?category=Hygiene+and+Cleaning'>Hygiene Cleaning</Link>
                 <Link to='/category?category=Kitchen+Utensils'>Kitchen Utensils</Link>
-                
             </div>
         </div>
     );
