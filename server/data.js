@@ -154,11 +154,11 @@ const products = [
 ];
 
 const users = [
-  { id: 0, username: 'user1', password: '1' },
-  { id: 1, username: 'user2', password: '2' },
-  { id: 2, username: 'user3', password: '3' },
-  { id: 3, username: 'user4', password: '4' },
-  { id: 4, username: 'user5', password: '5' },
+  { id: 0, username: 'user1', email: 'user1@email.com', password: '1' },
+  { id: 1, username: 'user2', email: 'user2@email.com', password: '2' },
+  { id: 2, username: 'user3', email: 'user3@email.com', password: '3' },
+  { id: 3, username: 'user4', email: 'user4@email.com', password: '4' },
+  { id: 4, username: 'user5', email: 'user5@email.com', password: '5' },
 ];
 
 const sessions = [
@@ -173,10 +173,16 @@ function deleteSession(sessionId){
   }
 }
 
+function setUsers(userData) {
+  const userId = Math.max(...users.map(user => user.id), 0) + 1;
+
+  users.push({ id: userId, ...userData });
+}
 
 module.exports = {
   getProducts: () => products,
   getUsers: () => users,
+  setUsers,
   getSessions: () => sessions,
   setSession: (sessionData) => {
     sessions.push(sessionData);

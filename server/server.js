@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const { getProducts, getUsers, getSessions, setSession, deleteSession } = require('./data.js');
+const { getProducts, getUsers, getSessions, setSession, deleteSession, setUsers } = require('./data.js');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -107,6 +107,11 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
   user = getUsers().find(item => item.username === username);
   
+  //if dont find by user try by email
+  if(!user)
+    user = getUsers().find(item => item.email === username);
+
+  //if dont have any match for the email or username
   if(!user){
     res.status(401).send('User Not Found');
   }else if(user.password != password){
@@ -124,22 +129,48 @@ app.post('/login', (req, res) => {
   }
 
 
-  //NOW IS LOG IN EVERY TIME
+  //NOW LOG IN EVERY TIME
 });
 
 app.post('/register', (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   //use query to check if database already have a user with this name
-
+  console.log("register", username, email, password);
   const users = getUsers();
-  const existingUser = users.find(item => item.username === username);
+  
+  //check if user with the given username already exists
+  let existingUserByUsername = users.find(item => item.username === username);
 
-  if (existingUser !== undefined) {
-    //a user with the given username already exists
-    res.json({ success: true, message: 'Already Used' });
+  //check if a user with the given email already exists
+  let existingUserByEmail = users.find(item => item.email === email);
+
+  if (existingUserByUsername || existingUserByEmail) {
+    //a user with the given username or email already exists
+    res.status(409  ).send('Login successful');
+    console.log("already used");
   } else {
-    res.json({ success: true, message: 'Success' });
+
+
+    //add new user
+    setUsers({username: username, email: email, password: password });
+    const user = getUsers().find(item => item.username === username);
+
+    if (!user) {
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    //generate a random session ID and save it to the session
+    const randomSessionId = generateRandomSessionId();
+    setSession({ userId: user.id, sessionId: randomSessionId });
+
+    
+    res.cookie('sessionId', randomSessionId, { maxAge: 3600000, path: '/', domain: 'localhost' });
+    
+    
+    res.status(200).send('Registration and login successful');
   }
+
 });
 
 app.post('/update-cart', (req, res) => {
@@ -158,7 +189,6 @@ app.post('/logout', function(req, res) {
   deleteSession(sessionId);
   console.log(getSessions());
 
-  res.redirect('/');
 });
 
 

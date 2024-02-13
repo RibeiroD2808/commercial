@@ -54,10 +54,10 @@ function LoginPage({ product }) {
           placeholder='Password'
         />
         <button type='submit'>Login</button>
-      </form>
+      </form> 
     </>
   );
-
+  //-------------------------------------------------NEED UPDATE: show message if password or username is wrong
   return displayContent;
 }
 

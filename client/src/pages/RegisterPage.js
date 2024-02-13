@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { postData } from '../scripts/serverCalls.js'; 
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage( {product} ){
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
       username: '',
+      email: '',
       password: '',
       confirmPassword: ''
     });
@@ -31,13 +33,11 @@ function RegisterPage( {product} ){
         if(formData.password && formData.password === formData.confirmPassword){
             try {
                 
-                const response = await postData('/register', formData);
-                setAlertMessage(response.message);
-
-                console.log('Form submission successful: ', response.message);
-                
+                await postData('/register', formData);
+                navigate('/');
             } catch (error) {
                 console.error('Form submission failed:', error);
+                setAlertMessage('Username or Email already used');
             }
         }else{
             setAlertMessage('The passwords are not the same');
@@ -48,7 +48,8 @@ function RegisterPage( {product} ){
         <>
             <Header />
             <form  onSubmit={handleSubmit}  action='/register' method='POST'>
-                <input onChange={handleInputChange} type='text' name='username' placeholder='Username or Email' />
+                <input onChange={handleInputChange} type='text' name='username' placeholder='Username' />
+                <input onChange={handleInputChange} type='text' name='email' placeholder='Email' />
                 <input onChange={handleInputChange} type='password' name='password' placeholder='Password' />
                 <input onChange={handleInputChange} type='password' name='confirmPassword' placeholder='Confirm Password' />
                 <button type='submit'>Register</button>
