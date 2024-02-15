@@ -6,7 +6,6 @@ import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from '../components/CartProvider.js';
 import fetchData, { postData } from '../scripts/serverCalls.js';
 import getCookie from '../scripts/getCookie.js';
-import axios from 'axios';
 
 function Header(){
 
@@ -31,7 +30,6 @@ function Header(){
         const sessionCookie = getCookie('sessionId');
         
         try {
-          //await axios.post('http://localhost:8000/logout', { sessionId : sessionCookie});
           postData('/logout',{ sessionId : sessionCookie});
           document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         } catch (error) {

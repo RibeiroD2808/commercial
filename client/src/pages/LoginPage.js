@@ -11,6 +11,8 @@ function LoginPage({ product }) {
     password: '',
   });
 
+  const [alertMessage, setAlertMessage] = useState('');
+
   // Update data every time input changes
   const handleInputChange = (e) => {
     setFormData((prevFormData) => ({
@@ -26,14 +28,11 @@ function LoginPage({ product }) {
     try {
       const response = await postData('/login', formData);
 
-      if (response.status === 200) {
-        console.log('Login successful');
-        navigate('/'); // Redirect to the home page
-      } else {
-        console.error('Login failed:', response.statusText);
-      }
+      navigate('/'); //redirect to the home page
+      
     } catch (error) {
       console.error('Form submission failed:', error.message);
+      setAlertMessage('Username or Email are wrong');
     }
   };
 
@@ -54,10 +53,10 @@ function LoginPage({ product }) {
           placeholder='Password'
         />
         <button type='submit'>Login</button>
-      </form> 
+      </form>
+      <p>{alertMessage}</p> 
     </>
   );
-  //-------------------------------------------------NEED UPDATE: show message if password or username is wrong
   return displayContent;
 }
 
