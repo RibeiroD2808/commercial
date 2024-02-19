@@ -1,0 +1,12 @@
+.productsFilter{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 4%;
+    padding: 20px;
+}
+
+.productsFilter > li{
+    border: 2px solid black;
+    padding: 20px;
+    
+}

@@ -11,7 +11,7 @@ function CategoryPage(){
   
   const [endpoint, setEndPoint] = useState('/category?category=' + category);
   const [data, setData] = useState([]);
-  const key = useRef(0);
+  
 
   //get data from api using fetchDataAndSetState function on serverCalls file
   useEffect(() => {
@@ -21,8 +21,6 @@ function CategoryPage(){
       setData(response.data.data);
       
     })();
-    key.current ++;
-    console.log("key",key, data);
   }, [endpoint, category]);
 
   const displayContent = (
@@ -31,7 +29,7 @@ function CategoryPage(){
       <div id="categoryDiv">
         <h1>{category}</h1>
         { data && data.length > 0 ? (
-            <Filter startData ={data} key={key}/>
+            <Filter startData ={data}/>
           ): null}
       </div>
     </>

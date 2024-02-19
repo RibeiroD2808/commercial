@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useFetcher } from 'react-router-dom';
 import DualSlider from './DualSlider';
-import Product from '../components/Product'
+import Product from '../components/Product';
+import '../style/filter.css';
 
 //return list elements the meet the conditions
 function FilterData(startData, brandsList, priceRange){
@@ -104,12 +105,12 @@ function Filter(startData){
       });
     };
     const displayContent = (
-        <> { /* console.log("asfasfasfsa",startPriceRange) */}
+        <> 
             { startPriceRange && startPriceRange.min != undefined && startPriceRange.max != undefined ?  
                 <div id="filterDiv">
                     <DualSlider
                     startPrice= {startPriceRange}
-                    value={priceRange} 
+                    value={priceRange}
                     setValue={(min, max) => setPriceRange({ min, max })}
                     />
                     <div>
@@ -123,8 +124,13 @@ function Filter(startData){
                         </div>
                         <button onClick={handleResetButton}>X</button> 
                     </div>
-                                
-                    <ul className='productsUl'>
+                    <div>
+                        <button onClick={() => setData([...data.sort((a, b) => a.productName.localeCompare(b.productName))])}> [A - Z] </button>
+                        <button onClick={() => setData([...data.sort((a, b) => b.productName.localeCompare(a.productName))])}> [Z - A] </button>
+                        <button onClick={() => setData([...data.sort((a, b) => a.price - b.price)])}> [$v] </button>
+                        <button onClick={() => setData([...data.sort((a, b) => b.price - a.price)])}> [$^] </button>
+                    </div>   
+                    <ul className='productsFilter'>
                         {data.map((item) => (
                             <Product key={item.id} product={item}></Product>              
                         ))}

@@ -5,11 +5,6 @@ li{
 
 
 /*                  carousel.js */
-.productsUl{
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-}
 
 .carouselDiv{
     display: flex;

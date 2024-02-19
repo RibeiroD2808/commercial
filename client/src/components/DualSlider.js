@@ -5,8 +5,7 @@ import 'nouislider/dist/nouislider.css';
 const DualSlider = ({ startPrice, value, setValue }) => {
   const sliderRef = useRef(null);
   const slider = sliderRef.current;
-
-  console.log(startPrice, value);
+  
   useEffect(() => {
     noUiSlider.create(sliderRef.current, {
       start: [startPrice.min, startPrice.max],
@@ -35,7 +34,7 @@ const DualSlider = ({ startPrice, value, setValue }) => {
 
   //update when the startPrice change
   useEffect(() => {
-    if (slider) {
+    if (slider ) {
       slider.noUiSlider.updateOptions({
         start: [value.min, value.max],
         range: {
@@ -43,7 +42,9 @@ const DualSlider = ({ startPrice, value, setValue }) => {
           'max': startPrice.max
         }
       });
+      console.log("startPrice");
     }
+    
   }, [startPrice]);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const DualSlider = ({ startPrice, value, setValue }) => {
         setValue(values[0], values[1]);
       });
     }
-  }, [setValue, slider]);
+  }, [slider]);
 
   return (
     <div ref={sliderRef}></div>
