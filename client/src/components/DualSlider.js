@@ -6,6 +6,7 @@ const DualSlider = ({ startPrice, value, setValue }) => {
   const sliderRef = useRef(null);
   const slider = sliderRef.current;
 
+  console.log(startPrice, value);
   useEffect(() => {
     noUiSlider.create(sliderRef.current, {
       start: [startPrice.min, startPrice.max],
@@ -23,7 +24,7 @@ const DualSlider = ({ startPrice, value, setValue }) => {
         sliderRef.current.noUiSlider.destroy();
     };
   }, []); // Run only once on component mount
-
+  
   useEffect(() => {
     if (slider) {
       slider.noUiSlider.updateOptions({
@@ -31,6 +32,19 @@ const DualSlider = ({ startPrice, value, setValue }) => {
       });
     }
   }, [value]);
+
+  //update when the startPrice change
+  useEffect(() => {
+    if (slider) {
+      slider.noUiSlider.updateOptions({
+        start: [value.min, value.max],
+        range: {
+          'min': startPrice.min,
+          'max': startPrice.max
+        }
+      });
+    }
+  }, [startPrice]);
 
   useEffect(() => {
     if (slider) {

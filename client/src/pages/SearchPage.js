@@ -23,7 +23,7 @@ function SearchPage (){
     }, [search]);
 
     const displayContent =(
-        <>
+        <>  
           <Header />
           { data && data.length > 0 ? (
             <Filter startData ={data}/>

@@ -23,28 +23,36 @@ function FilterData(startData, brandsList, priceRange){
             return elem.price >= priceRange.min && elem.price <= priceRange.max;
         });
     }
-
+    
     return filteredData;
 }
 
 function Filter(startData){
     const [data, setData] = useState(startData.startData);
-    
+    const prevData = useRef(startData.startData);
+    const key = useRef(0);
+
     //filters
     const [priceRange, setPriceRange] = useState({min: undefined, max: undefined});
     const [startPriceRange, setStartPriceRange] = useState({min: undefined, max: undefined});
     const [firstRender, setFirstRender] = useState(true);
-    const prevStartDataRef = useRef(startData);
+    
     //brand list {brand {count, selected}}
     const [brandsList, setBrandsList] = useState();
-    
     const [dropdownVisible, setDropdownVisible] = useState(false);
     
     useEffect(() => {
         
+        //if startdata was changed 
+        if(startData.startData != prevData.current){
+            setFirstRender(true);
+            prevData.current = startData.startData;
+            setData(startData.startData);
+        }
+
         if(firstRender){
-            setBrandsList( data.reduce((acc, item) => {
-          
+            setBrandsList( startData.startData.reduce((acc, item) => {
+
                 const brand = item.brand;
                 
                 //increment count for the brand or initialize to 1 if it doesn't exist
@@ -52,7 +60,7 @@ function Filter(startData){
                 return acc;
             }, {}))
             
-            const prices = data.map(item => item.price);
+            const prices = startData.startData.map(item => item.price);
 
             //use Math.min and Math.max to find the minimum and maximum prices
             const minPrice = Math.min(...prices);
@@ -62,14 +70,14 @@ function Filter(startData){
             setPriceRange({ min: minPrice, max: maxPrice });
             setStartPriceRange({ min: minPrice, max: maxPrice });
             setFirstRender(false);
-            
+            key.current += 1;
         }else{
+
             //update the state with the filtered data
             setData(FilterData(startData.startData, brandsList, priceRange));
         }
-        
     }, [startData, priceRange, brandsList])
-    
+
     //change the select value
     const handleBrandCheckboxChange = (selectedBrand) => {
         setBrandsList((prevBrandsList) => {
@@ -95,11 +103,9 @@ function Filter(startData){
         return updatedBrandsList;
       });
     };
-
     const displayContent = (
-        <> { console.log("asfasfasfsa",startPriceRange)}
+        <> { /* console.log("asfasfasfsa",startPriceRange) */}
             { startPriceRange && startPriceRange.min != undefined && startPriceRange.max != undefined ?  
-                
                 <div id="filterDiv">
                     <DualSlider
                     startPrice= {startPriceRange}
@@ -107,22 +113,22 @@ function Filter(startData){
                     setValue={(min, max) => setPriceRange({ min, max })}
                     />
                     <div>
-                    <button onClick={() => setDropdownVisible(!dropdownVisible)}>Brands</button>
-                    <div>
-                        {dropdownVisible && Object.entries(brandsList).map(([brand, {count, selected}]) => (
-                        <label key={brand}>
-                            <input type='checkbox' value={brand} checked={selected} onChange={() => handleBrandCheckboxChange(brand)}></input>{brand} ({count})
-                        </label>
-                        ))}
+                        <button onClick={() => setDropdownVisible(!dropdownVisible)}>Brands</button>
+                        <div>
+                            {dropdownVisible && Object.entries(brandsList).map(([brand, {count, selected}]) => (
+                            <label key={brand}>
+                                <input type='checkbox' value={brand} checked={selected} onChange={() => handleBrandCheckboxChange(brand)}></input>{brand} ({count})
+                            </label>
+                            ))}
+                        </div>
+                        <button onClick={handleResetButton}>X</button> 
                     </div>
-                    <button onClick={handleResetButton}>X</button> 
+                                
                     <ul className='productsUl'>
                         {data.map((item) => (
                             <Product key={item.id} product={item}></Product>              
                         ))}
                     </ul>
-                    </div>
-                    
                 </div> : null
             }
         </>
