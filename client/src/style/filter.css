@@ -1,12 +1,35 @@
 .productsFilter{
     display: grid;
-    grid-template-columns: auto auto auto;
-    column-gap: 4%;
+    grid-template-columns: 25% 25% 25% 25%;
     padding: 20px;
 }
 
 .productsFilter > li{
     border: 2px solid black;
-    padding: 20px;
+    margin: 5px;
     
+}
+
+#filterDiv{
+    display: flex;
+
+}
+
+#dualSliderDiv{
+    width: 60%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#brandsDiv{
+    width: auto;
+}
+
+#brandsList{
+    display: flex;
+    flex-direction: column;
+}
+
+#orderDiv{
+    width: auto;
 }

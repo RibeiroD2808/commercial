@@ -25,9 +25,9 @@ function Home() {
       <>
         <Header />
         <div id="homeDiv">
-          <div id='latestProductsDiv'>
-            <Carousel products={latestProducts} productsPerPage={4} />  
-          </div>           
+
+          <Carousel products={latestProducts} productsPerPage={4} />  
+        
         </div>
         {}	
       </>

@@ -107,35 +107,42 @@ function Filter(startData){
     const displayContent = (
         <> 
             { startPriceRange && startPriceRange.min != undefined && startPriceRange.max != undefined ?  
-                <div id="filterDiv">
-                    <DualSlider
-                    startPrice= {startPriceRange}
-                    value={priceRange}
-                    setValue={(min, max) => setPriceRange({ min, max })}
-                    />
-                    <div>
-                        <button onClick={() => setDropdownVisible(!dropdownVisible)}>Brands</button>
-                        <div>
-                            {dropdownVisible && Object.entries(brandsList).map(([brand, {count, selected}]) => (
-                            <label key={brand}>
-                                <input type='checkbox' value={brand} checked={selected} onChange={() => handleBrandCheckboxChange(brand)}></input>{brand} ({count})
-                            </label>
-                            ))}
+                <>
+                    <div id="filterDiv">
+                        <div id='brandsDiv'>
+                            <button onClick={() => setDropdownVisible(!dropdownVisible)}>Brands</button>
+                            <div id='brandsList'>
+                                {dropdownVisible && Object.entries(brandsList).map(([brand, {count, selected}]) => (
+                                <label key={brand}>
+                                    <input type='checkbox' value={brand} checked={selected} onChange={() => handleBrandCheckboxChange(brand)}></input>{brand} ({count})
+                                </label>
+                                ))}
+                            </div>
+                             
                         </div>
-                        <button onClick={handleResetButton}>X</button> 
+                        <div id='dualSliderDiv'>
+                            <DualSlider
+                            startPrice= {startPriceRange}
+                            value={priceRange}
+                            setValue={(min, max) => setPriceRange({ min, max })}
+                            />
+                        </div>
+                        <div id='orderDiv'>
+                            <button onClick={() => setData([...data.sort((a, b) => a.productName.localeCompare(b.productName))])}> [A - Z] </button>
+                            <button onClick={() => setData([...data.sort((a, b) => b.productName.localeCompare(a.productName))])}> [Z - A] </button>
+                            <button onClick={() => setData([...data.sort((a, b) => a.price - b.price)])}> [$v] </button>
+                            <button onClick={() => setData([...data.sort((a, b) => b.price - a.price)])}> [$^] </button>
+                            <button onClick={handleResetButton}>X</button>
+                        </div>   
+                        
                     </div>
-                    <div>
-                        <button onClick={() => setData([...data.sort((a, b) => a.productName.localeCompare(b.productName))])}> [A - Z] </button>
-                        <button onClick={() => setData([...data.sort((a, b) => b.productName.localeCompare(a.productName))])}> [Z - A] </button>
-                        <button onClick={() => setData([...data.sort((a, b) => a.price - b.price)])}> [$v] </button>
-                        <button onClick={() => setData([...data.sort((a, b) => b.price - a.price)])}> [$^] </button>
-                    </div>   
                     <ul className='productsFilter'>
-                        {data.map((item) => (
-                            <Product key={item.id} product={item}></Product>              
-                        ))}
-                    </ul>
-                </div> : null
+                    {data.map((item) => (
+                        <Product key={item.id} product={item}></Product>              
+                    ))}
+                    </ul> 
+                </>
+                : null
             }
         </>
     );

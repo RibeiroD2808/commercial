@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Product from './Product';
+import '../style/main.css';
 
 function Carousel( {products, productsPerPage} ){
 
@@ -15,13 +16,11 @@ function Carousel( {products, productsPerPage} ){
       
     function Content () {
         return (
-        <div id='ContentDiv'>
         <ul className='productsUl'>
             {visibleProducts .map((item) => (
-              <Product key={item.id} product={item}/>
+            <Product key={item.id} product={item}/>
             ))}
         </ul>        
-        </div>
         )
     }
 
@@ -36,7 +35,9 @@ function Carousel( {products, productsPerPage} ){
     const displayContent = (
         <div className='carouselDiv'>
             <button onClick={() => moveCarousel(false)}>Prev</button>
-            <Content />
+            <div >
+                <Content />
+            </div>
             <button onClick={() => moveCarousel(true)}>Next</button>
         </div>
     );
