@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import fetchData from '../scripts/serverCalls.js'; 
 import Header from '../components/Header';
 import Filter from '../components/Filter.js';
+import Footer from '../components/Footer.js';
+import '../style/main.css';
 
 function SearchPage (){
 
@@ -23,16 +25,19 @@ function SearchPage (){
 
       fetchDataAndSetState(); // call the function inside useEffect
     }, [search]);
-
+    
     const displayContent =(
         <>  
           <Header />
-          { data && data.length > 0 ? (
-            <>
-              <p>{data.length} results for  “{search}”</p>
-              <Filter startData ={data}/>
-            </>
-          ): <p>0 results for  “{search}”</p>}
+          <div id='searchPageDiv' className='mainContent'>
+            { data && data.length > 0 ? (
+              <>
+                <p>{data.length} results for  “{search}”</p>
+                <Filter startData ={data}/>
+              </>
+            ): <p>0 results for  “{search}”</p>}
+          </div>
+          <Footer />
         </>
     )
 

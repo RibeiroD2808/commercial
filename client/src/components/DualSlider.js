@@ -4,8 +4,7 @@ import 'nouislider/dist/nouislider.css';
 
 const DualSlider = ({ startPrice, value, setValue }) => {
   const sliderRef = useRef(null);
-  const slider = sliderRef.current;
-  
+
   useEffect(() => {
     noUiSlider.create(sliderRef.current, {
       start: [startPrice.min, startPrice.max],
@@ -19,23 +18,22 @@ const DualSlider = ({ startPrice, value, setValue }) => {
 
     // Cleanup the slider when the component is unmounted
     return () => {
-      if(sliderRef.current)
+      if (sliderRef.current)
         sliderRef.current.noUiSlider.destroy();
     };
-  }, []); // Run only once on component mount
-  
+  }, [startPrice.min, startPrice.max]); // Run when startPrice changes
+
   useEffect(() => {
-    if (slider) {
-      slider.noUiSlider.updateOptions({
+    if (sliderRef.current) {
+      sliderRef.current.noUiSlider.updateOptions({
         start: [value.min, value.max],
       });
     }
   }, [value]);
 
-  //update when the startPrice change
   useEffect(() => {
-    if (slider ) {
-      slider.noUiSlider.updateOptions({
+    if (sliderRef.current) {
+      sliderRef.current.noUiSlider.updateOptions({
         start: [value.min, value.max],
         range: {
           'min': startPrice.min,
@@ -44,17 +42,16 @@ const DualSlider = ({ startPrice, value, setValue }) => {
       });
       console.log("startPrice");
     }
-    
   }, [startPrice]);
-
+  
   useEffect(() => {
-    if (slider) {
-      slider.noUiSlider.on('change', function (values, handle) {
+    if (sliderRef.current) {
+      sliderRef.current.noUiSlider.on('change', function (values, handle) {
         console.log('Slider values:', values);
         setValue(values[0], values[1]);
       });
     }
-  }, [slider]);
+  }, [setValue]);
 
   return (
     <div ref={sliderRef}></div>

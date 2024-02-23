@@ -31,8 +31,7 @@ function FilterData(startData, brandsList, priceRange){
 function Filter(startData){
     const [data, setData] = useState(startData.startData);
     const prevData = useRef(startData.startData);
-    const key = useRef(0);
-
+    
     //filters
     const [priceRange, setPriceRange] = useState({min: undefined, max: undefined});
     const [startPriceRange, setStartPriceRange] = useState({min: undefined, max: undefined});
@@ -42,42 +41,38 @@ function Filter(startData){
     const [brandsList, setBrandsList] = useState();
     const [dropdownVisible, setDropdownVisible] = useState(false);
     
+    //every time startdate change, will update with new prices and brands
     useEffect(() => {
-        
-        //if startdata was changed 
-        if(startData.startData != prevData.current){
-            setFirstRender(true);
-            prevData.current = startData.startData;
-            setData(startData.startData);
-        }
+        setBrandsList( startData.startData.reduce((acc, item) => {
 
-        if(firstRender){
-            setBrandsList( startData.startData.reduce((acc, item) => {
-
-                const brand = item.brand;
-                
-                //increment count for the brand or initialize to 1 if it doesn't exist
-                acc[brand] = { count: (acc[brand] ? acc[brand].count + 1 : 1), selected: false};
-                return acc;
-            }, {}))
+            const brand = item.brand;
             
-            const prices = startData.startData.map(item => item.price);
+            //increment count for the brand or initialize to 1 if it doesn't exist
+            acc[brand] = { count: (acc[brand] ? acc[brand].count + 1 : 1), selected: false};
+            return acc;
+        }, {}))
+        
+        const prices = startData.startData.map(item => item.price);
 
-            //use Math.min and Math.max to find the minimum and maximum prices
-            const minPrice = Math.min(...prices);
-            const maxPrice = Math.max(...prices);
+        //use Math.min and Math.max to find the minimum and maximum prices
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
 
-            //set the initial price range state
-            setPriceRange({ min: minPrice, max: maxPrice });
-            setStartPriceRange({ min: minPrice, max: maxPrice });
-            setFirstRender(false);
-            key.current += 1;
-        }else{
+        //set the initial price range state
+        setPriceRange({ min: minPrice, max: maxPrice });
+        setStartPriceRange({ min: minPrice, max: maxPrice });
+    }, [startData]);
 
+    //update filter every time user change brands or price range
+    useEffect(() => {
+
+        if(!firstRender){
             //update the state with the filtered data
-            setData(FilterData(startData.startData, brandsList, priceRange));
+            setData(FilterData(startData.startData, brandsList, priceRange));      
         }
-    }, [startData, priceRange, brandsList])
+        setFirstRender(false);
+
+    }, [priceRange, brandsList])
 
     //change the select value
     const handleBrandCheckboxChange = (selectedBrand) => {
@@ -121,10 +116,14 @@ function Filter(startData){
                              
                         </div>
                         <div id='dualSliderDiv'>
+                            <div id='slideValuesDiv'>
+                                <p>{priceRange.min}</p>
+                                <p>{priceRange.max}</p>
+                            </div>
                             <DualSlider
-                            startPrice= {startPriceRange}
-                            value={priceRange}
-                            setValue={(min, max) => setPriceRange({ min, max })}
+                                startPrice= {startPriceRange}
+                                value={priceRange}
+                                setValue={(min, max) => setPriceRange({ min, max })}
                             />
                         </div>
                         <div id='orderDiv'>

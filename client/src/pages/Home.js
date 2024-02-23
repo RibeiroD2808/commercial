@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import fetchData from '../scripts/serverCalls'; 
 import Header from '../components/Header';
 import Carousel from '../components/Carousel';
+import Footer from '../components/Footer';
 import '../style/main.css';
 
 function Home() {
@@ -24,12 +25,12 @@ function Home() {
     const displayContent = latestProducts ? (
       <>
         <Header />
-        <div id="homeDiv">
+        <div id="homeDiv" className='mainContent'>
 
           <Carousel products={latestProducts} productsPerPage={4} />  
         
         </div>
-        {}	
+        <Footer />	
       </>
     ) : null;
 

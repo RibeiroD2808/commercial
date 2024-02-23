@@ -8,8 +8,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 axios.defaults.withCredentials = false;
 
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
     <App />
-  </React.StrictMode>
+  //</React.StrictMode>
 );
 

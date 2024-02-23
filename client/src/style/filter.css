@@ -15,6 +15,11 @@
 
 }
 
+#slideValuesDiv{
+    display: flex;
+    justify-content: space-between;
+}
+
 #dualSliderDiv{
     width: 60%;
     padding-left: 20px;
@@ -22,12 +27,15 @@
 }
 
 #brandsDiv{
-    width: auto;
+    width: 10%;
 }
 
 #brandsList{
     display: flex;
     flex-direction: column;
+    background-color: aliceblue;
+    position: absolute;
+    z-index: 10;
 }
 
 #orderDiv{
