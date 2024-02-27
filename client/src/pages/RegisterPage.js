@@ -46,16 +46,38 @@ function RegisterPage( {product} ){
 
     const displayContent = (
         <>
-            <Header />
-            <form  onSubmit={handleSubmit}  action='/register' method='POST'>
-                <input onChange={handleInputChange} type='text' name='username' placeholder='Username' />
-                <input onChange={handleInputChange} type='text' name='email' placeholder='Email' />
-                <input onChange={handleInputChange} type='password' name='password' placeholder='Password' />
-                <input onChange={handleInputChange} type='password' name='confirmPassword' placeholder='Confirm Password' />
-                <button type='submit'>Register</button>
-                <p>{alertMessage}</p>    
-            </form>
-        </>
+      <Link to='/' className='nameP'>Company Name</Link>
+      <div id='loginPage'>
+        <p id='loginTitle'>Register</p>
+        
+        <form  onSubmit={handleSubmit}  action='/register' method='POST'>
+          <div>
+            <label>Username: </label>
+            <input onChange={handleInputChange} type='text' name='username' placeholder='Username' />
+          </div>
+          <div>
+            <label>Email: </label>
+            <input onChange={handleInputChange} type='text' name='email' placeholder='Email' />
+          </div>    
+          <div>
+            <label>Password: </label>
+            <input onChange={handleInputChange} type='password' name='password' placeholder='Password' />
+          </div> 
+          <div>
+            <label>Confirm Password: </label>
+            <input onChange={handleInputChange} type='password' name='confirmPassword' placeholder='Confirm Password' />
+          </div>       
+          <button type='submit'>Register</button>
+        </form>
+        <p id='alertMessage'>{alertMessage}</p> 
+        <div className='separatorDiv'>
+          <p className='separator'>Already have an account?</p>
+        </div>
+        
+        <Link to='/login' id='registerLink'>Login</Link>
+      </div>
+      
+    </>
     );
 
     return displayContent;

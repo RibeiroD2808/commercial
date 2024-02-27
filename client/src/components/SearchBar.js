@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+
 function SearchBar (){
 
     const [search, setSearch] = useState("");

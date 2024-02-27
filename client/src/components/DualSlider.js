@@ -1,15 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 
 const DualSlider = ({ startPrice, value, setValue }) => {
   const sliderRef = useRef(null);
+  const prevValues = useRef({min: undefined, max: undefined});
+  const [inputValue, setInputValue] = useState({min: startPrice.min, max: startPrice.max});
 
   useEffect(() => {
     noUiSlider.create(sliderRef.current, {
       start: [startPrice.min, startPrice.max],
       connect: true,
       behaviour: 'drag-all',
+      step: 1,
+      margin: 1,
       range: {
         'min': startPrice.min,
         'max': startPrice.max
@@ -21,15 +25,7 @@ const DualSlider = ({ startPrice, value, setValue }) => {
       if (sliderRef.current)
         sliderRef.current.noUiSlider.destroy();
     };
-  }, [startPrice.min, startPrice.max]); // Run when startPrice changes
-
-  useEffect(() => {
-    if (sliderRef.current) {
-      sliderRef.current.noUiSlider.updateOptions({
-        start: [value.min, value.max],
-      });
-    }
-  }, [value]);
+  }, []);
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -44,17 +40,26 @@ const DualSlider = ({ startPrice, value, setValue }) => {
     }
   }, [startPrice]);
   
-  useEffect(() => {
-    if (sliderRef.current) {
-      sliderRef.current.noUiSlider.on('change', function (values, handle) {
-        console.log('Slider values:', values);
+  if (sliderRef.current) {
+    //when handle change
+    sliderRef.current.noUiSlider.on('change', function (values, handle) {    
+      
+      if(prevValues.current.min != values[0] || prevValues.current.max != values[1]){
+        prevValues.current = {min: values[0], max: values[1]};
         setValue(values[0], values[1]);
-      });
-    }
-  }, [setValue]);
+      }
+    });
+  }
 
   return (
-    <div ref={sliderRef}></div>
+    <div id="dualSliderDiv">
+        <div id="slideValuesDiv">
+          <p>{parseFloat(value.min).toFixed(2)} €</p>
+          <p>{parseFloat(value.max).toFixed(2)} €</p>
+        </div>
+      
+        <div ref={sliderRef}></div>
+    </div>
   );
 };
 

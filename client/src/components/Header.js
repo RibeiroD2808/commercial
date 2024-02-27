@@ -39,22 +39,32 @@ function Header(){
 
     const displayContent = (       
         <div id='headerDiv'>
+            <div id='headerTopDiv'>
+                <select name="Language" id="language" selected="pt">
+                    <option value="pt">PT</option>
+                    <option value="es">ES</option>
+                    <option value="en">EN</option>
+                </select>
+                <div>
+                    <Link to='/cart'><FaShoppingCart /></Link>
+                        {cart.quantities.reduce((partialSum, a) => partialSum + a, 0)}
+                        {document.cookie.includes('sessionId') ? (
+                            <button onClick={handleLogout}>LogOut</button>
+                        ) : (
+                            <>
+                                <Link to='/login'>LogIn</Link>
+                                <Link to='/register'>Register</Link>
+                            </>
+                    )}
+                </div>
+            </div>
             <div id='headerSearchDiv'>
-                <Link to='/'>Home</Link>
+                <Link to='/' id='nameHeader'>Company Name</Link>
                 <SearchBar />
                 
-                <Link to='/cart'><FaShoppingCart /></Link>
-                {cart.quantities.reduce((partialSum, a) => partialSum + a, 0)}
-                {document.cookie.includes('sessionId') ? (
-                    <button onClick={handleLogout}>LogOut</button>
-                ) : (
-                    <>
-                        <Link to='/login'>LogIn</Link>
-                        <Link to='/register'>Register</Link>
-                    </>
-                )}
+                
             </div>    
-            <div id='headerLinksDiv'>
+            <div id='headerCategoryDiv'>
                 <Link to='/category?category=Packaging'>Packaging</Link>
                 <Link to='/category?category=Hygiene+and+Cleaning'>Hygiene Cleaning</Link>
                 <Link to='/category?category=Kitchen+Utensils'>Kitchen Utensils</Link>

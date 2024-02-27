@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { postData } from '../scripts/serverCalls.js';
 import { useNavigate } from 'react-router-dom';
+import "../style/login.css";
 
 function LoginPage({ product }) {
   const navigate = useNavigate();
@@ -38,23 +39,39 @@ function LoginPage({ product }) {
 
   const displayContent = (
     <>
-      <Header />
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={handleInputChange}
-          type='text'
-          name='username'
-          placeholder='Username or Email'
-        />
-        <input
-          onChange={handleInputChange}
-          type='password'
-          name='password'
-          placeholder='Password'
-        />
-        <button type='submit'>Login</button>
-      </form>
-      <p>{alertMessage}</p> 
+      <Link to='/' className='nameP'>Company Name</Link>
+      <div id='loginPage'>
+        <p id='loginTitle'>Login</p>
+        
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Username: </label>
+            <input
+              onChange={handleInputChange}
+              type='text'
+              name='username'
+              placeholder='Username or Email'
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <input
+              onChange={handleInputChange}
+              type='password'
+              name='password'
+              placeholder='Password'
+            />
+          </div>          
+          <button type='submit'>Login</button>
+        </form>
+        <p id='alertMessage'>{alertMessage}</p> 
+        <div className='separatorDiv'>
+          <p className='separator'>New?</p>
+        </div>
+        
+        <Link to='/register' id='registerLink'>Register</Link>
+      </div>
+      
     </>
   );
   return displayContent;

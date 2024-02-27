@@ -18,12 +18,16 @@
 #slideValuesDiv{
     display: flex;
     justify-content: space-between;
+
 }
 
 #dualSliderDiv{
     width: 60%;
     padding-left: 20px;
     padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 #brandsDiv{

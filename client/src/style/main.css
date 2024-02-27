@@ -10,6 +10,19 @@ li{
     list-style: none;
 }
 
+a{
+    text-decoration:none !important;
+}
+
+select{
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+    padding: 3px;
+    text-align: center;
+}
+
 .mainContent{
     min-height:75vh;;
     position: relative;

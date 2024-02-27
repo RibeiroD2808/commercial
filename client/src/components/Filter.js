@@ -55,8 +55,8 @@ function Filter(startData){
         const prices = startData.startData.map(item => item.price);
 
         //use Math.min and Math.max to find the minimum and maximum prices
-        const minPrice = Math.min(...prices);
-        const maxPrice = Math.max(...prices);
+        const minPrice = Math.floor(Math.min(...prices));
+        const maxPrice = Math.ceil(Math.max(...prices));
 
         //set the initial price range state
         setPriceRange({ min: minPrice, max: maxPrice });
@@ -65,7 +65,7 @@ function Filter(startData){
 
     //update filter every time user change brands or price range
     useEffect(() => {
-
+        console.log("change price range");
         if(!firstRender){
             //update the state with the filtered data
             setData(FilterData(startData.startData, brandsList, priceRange));      
@@ -115,17 +115,11 @@ function Filter(startData){
                             </div>
                              
                         </div>
-                        <div id='dualSliderDiv'>
-                            <div id='slideValuesDiv'>
-                                <p>{priceRange.min}</p>
-                                <p>{priceRange.max}</p>
-                            </div>
                             <DualSlider
                                 startPrice= {startPriceRange}
                                 value={priceRange}
                                 setValue={(min, max) => setPriceRange({ min, max })}
                             />
-                        </div>
                         <div id='orderDiv'>
                             <button onClick={() => setData([...data.sort((a, b) => a.productName.localeCompare(b.productName))])}> [A - Z] </button>
                             <button onClick={() => setData([...data.sort((a, b) => b.productName.localeCompare(a.productName))])}> [Z - A] </button>
@@ -136,9 +130,9 @@ function Filter(startData){
                         
                     </div>
                     <ul className='productsFilter'>
-                    {data.map((item) => (
-                        <Product key={item.id} product={item}></Product>              
-                    ))}
+                        {data.map((item) => (
+                            <Product key={item.id} product={item}></Product>              
+                        ))}
                     </ul> 
                 </>
                 : null
