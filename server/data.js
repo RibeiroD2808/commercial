@@ -161,6 +161,15 @@ const users = [
   { id: 4, username: 'user5', email: 'user5@email.com', password: '5' },
 ];
 
+const bannerImg = [
+
+  {url: 'img/banner1.png',},
+  {url: 'img/banner2.png',},
+  {url: 'img/banner3.png',},
+  {url: 'img/banner4.png',},
+];
+
+
 const sessions = [
   { userId: 10, sessionId: 10},
   { userId:0, sessionId: 'ms4EubBCJ'}
@@ -188,5 +197,5 @@ module.exports = {
     sessions.push(sessionData);
   },
   deleteSession,
-
+  getBannerImg: () => bannerImg,
 };

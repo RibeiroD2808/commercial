@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const { getProducts, getUsers, getSessions, setSession, deleteSession, setUsers } = require('./data.js');
+const { getProducts, getUsers, getSessions, setSession, deleteSession, setUsers, getBannerImg } = require('./data.js');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -32,7 +32,7 @@ function generateRandomSessionId(length = 16) {
 
 app.get('/', (req, res) => {
   const products = getProducts();
-  
+  const banners = getBannerImg();
   const sessionId = req.headers['sessionId']; 
 
   let userName = '';
@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
   let latestProducts = products.sort((a, b) => new Date(b.addedDate) - new Date(a.addedDate));  
   latestProducts = latestProducts.slice(0,7);
   
-  res.json({products, latestProducts, userName}); 
+  res.json({products, latestProducts, userName, banners }); 
 });
 
 app.get('/category', (req, res) => {

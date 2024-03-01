@@ -35,7 +35,7 @@ function Carousel( {products, productsPerPage} ){
     const displayContent = (
         <div className='carouselDiv'>
             <button onClick={() => moveCarousel(false)}>Prev</button>
-            <div >
+            <div id='carouselProducts'>
                 <Content />
             </div>
             <button onClick={() => moveCarousel(true)}>Next</button>
