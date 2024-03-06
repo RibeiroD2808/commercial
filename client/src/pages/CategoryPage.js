@@ -27,7 +27,7 @@ function CategoryPage(){
     <>
       <Header />
       <div id="categoryDiv">
-        <h1>{category}</h1>
+        <h1 className='categoryH1'>{category}</h1>
         { data && data.length > 0 ? (
             <Filter startData ={data}/>
           ): null}

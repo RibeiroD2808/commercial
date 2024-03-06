@@ -9,7 +9,8 @@ const products = [
     description: 'Professional-grade knives with ergonomic handles for precision chopping and slicing.',
     price: 49.99,
     quantity: 100,
-    addedDate: '2023-05-15'
+    addedDate: '2023-05-15',
+    images: ['0700400.png', '0700623.png']
   },
   {
     id: 2,
@@ -19,7 +20,8 @@ const products = [
     description: 'Versatile and flexible silicone whisk that adapts to the shape of your bowls for efficient mixing.',
     price: 14.99,
     quantity: 150,
-    addedDate: '2023-07-22'
+    addedDate: '2023-07-22',
+    images: ['0700623.png'] 
   },
   {
     id: 3,
@@ -29,7 +31,8 @@ const products = [
     description: 'Eco-friendly cutting boards made from bamboo fiber, designed for specific food groups to prevent cross-contamination.',
     price: 29.99,
     quantity: 75,
-    addedDate: '2023-04-10'
+    addedDate: '2023-04-10',
+    images: ['0700627.png', '0700400.png'] 
   },
   {
     id: 4,
@@ -39,7 +42,8 @@ const products = [
     description: 'Space-saving colander made from durable and heat-resistant silicone.',
     price: 19.99,
     quantity: 120,
-    addedDate: '2023-08-05'
+    addedDate: '2023-08-05',
+    images: ['0700400.png', '0700623.png', '0700627.png'] 
   },
   {
     id: 5,
@@ -49,7 +53,8 @@ const products = [
     description: 'Stylish rotating spice rack with labeled jars, ensuring easy access to your favorite spices while cooking.',
     price: 39.99,
     quantity: 90,
-    addedDate: '2023-06-18'
+    addedDate: '2023-06-18',
+    images: ['0700400.png']
   },
   {
     id: 6,
@@ -59,7 +64,8 @@ const products = [
     description: 'Touchless soap dispenser with antibacterial technology, promoting hygiene in the bathroom or kitchen.',
     price: 29.99,
     quantity: 200,
-    addedDate: '2023-03-02'
+    addedDate: '2023-03-02',
+    images: ['0700623.png', '0700627.png']
   },
   {
     id: 7,
@@ -69,7 +75,8 @@ const products = [
     description: 'Ultra-absorbent and lint-free microfiber cloths for streak-free cleaning on various surfaces.',
     price: 12.99,
     quantity: 300,
-    addedDate: '2023-09-14'
+    addedDate: '2023-09-14',
+    images: ['0700627.png'] 
   },
   {
     id: 8,
@@ -79,7 +86,8 @@ const products = [
     description: 'Discreet and long-lasting toilet bowl deodorizer that releases a pleasant fragrance with every flush.',
     price: 8.99,
     quantity: 150,
-    addedDate: '2023-01-25'
+    addedDate: '2023-01-25',
+    images: ['0700400.png', '0700623.png'] 
   },
   {
     id: 9,
@@ -89,7 +97,8 @@ const products = [
     description: 'Environmentally friendly and multi-surface cleaner with a refreshing citrus scent.',
     price: 16.99,
     quantity: 100,
-    addedDate: '2023-11-30'
+    addedDate: '2023-11-30',
+    images: ['0700400.png', '0700623.png', '0700627.png']
   },
   {
     id: 10,
@@ -99,7 +108,8 @@ const products = [
     description: 'Powerful stain remover specifically formulated for carpets and upholstery.',
     price: 19.99,
     quantity: 80,
-    addedDate: '2023-02-12'
+    addedDate: '2023-02-12',
+    images: ['0700400.png', '0700627.png']
   },
   {
     id: 11,
@@ -109,7 +119,8 @@ const products = [
     description: 'Recyclable and eco-friendly gift wraps, perfect for all occasions.',
     price: 7.99,
     quantity: 150,
-    addedDate: '2023-10-20'
+    addedDate: '2023-10-20',
+    images: ['0700623.png'] 
   },
   {
     id: 12,
@@ -119,7 +130,8 @@ const products = [
     description: 'Airtight food storage containers designed to keep your ingredients fresh for longer.',
     price: 24.99,
     quantity: 120,
-    addedDate: '2023-07-01'
+    addedDate: '2023-07-01',
+    images: ['0700400.png', '0700627.png']
   },
   {
     id: 13,
@@ -129,7 +141,8 @@ const products = [
     description: 'Durable and reusable ziplock bags in various sizes, perfect for storing snacks, fruits, and leftovers.',
     price: 11.99,
     quantity: 200,
-    addedDate: '2023-05-08'
+    addedDate: '2023-05-08',
+    images: ['0700400.png']
   },
   {
     id: 14,
@@ -139,7 +152,8 @@ const products = [
     description: 'Protective bubble wrap with a fragile item indicator, ensuring safe shipping of delicate items.',
     price: 6.99,
     quantity: 300,
-    addedDate: '2023-12-05'
+    addedDate: '2023-12-05',
+    images: ['0700623.png', '0700627.png'] 
   },
   {
     id: 15,
@@ -149,7 +163,8 @@ const products = [
     description: 'Sustainable takeout containers made from biodegradable kraft paper.',
     price: 16.99,
     quantity: 100,
-    addedDate: '2023-04-28'
+    addedDate: '2023-04-28',
+    images: ['0700627.png']
   }
 ];
 

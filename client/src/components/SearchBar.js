@@ -18,7 +18,9 @@ function SearchBar (){
     const displayContent = (
         <form onSubmit={handleOnClick}>
             <input onChange={handleChange} value={search} placeholder='What do you search?' name='search'></input>
-            <button type='submit'><Link to={`/search?search=${search}`}>Search</Link></button>
+            <Link to={`/search?search=${search}`}>
+                <button type='submit'>Search</button>
+            </Link>
         </form>
     );
 

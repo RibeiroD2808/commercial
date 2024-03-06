@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../components/CartProvider';
 
+
 function Product( {product} ){
     
     
@@ -10,12 +11,15 @@ function Product( {product} ){
     const displayContent = (
         <li className='productDiv' key={product.id}>
             <Link to={"/product?id=" + product.id} >
-                <p>{product.id}</p>
-                <p>{product.productName}</p>
-                <p>{product.brand}</p>
-                <p>{product.price}</p>
+                <img alt="Your Image" src={'img/' + product.images[0]} />
+                <div className='productDescription'>
+                    <p className='productId'>#{product.id}</p>
+                    <p className='productName'>{product.productName}</p>
+                    <p className='productBrand'>{product.brand}</p>
+                    <p className='productPrice'>{product.price} €</p>
+                </div>
             </Link>
-            <button onClick={() => dispatch({ type: 'ADD', payload: product })}>Add</button>
+            <button id='addButtonProduct' onClick={() => dispatch({ type: 'ADD', payload: product })}>Add</button>
         </li>
     );
 

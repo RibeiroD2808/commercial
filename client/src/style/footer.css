@@ -1,9 +1,12 @@
 #footer{
     height: 10vh;
     background-color: darkgrey;    
+    margin-top: 150px;
+    padding-top: 40px;
 }
 
 #footerBottom{
+    
     margin-left: 8%;
     margin-right: 8%;
     border-top:  1px solid black;

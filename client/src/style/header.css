@@ -1,6 +1,6 @@
 #headerDiv{
     background-color: bisque;
-    height: 15vh;
+    padding-bottom: 30px;
 }
 #headerTopDiv{
     display: flex;
@@ -37,6 +37,10 @@
 
 #headerSearchDiv form button{
     width: 15%;
+}
+
+#headerSearchDiv form a{
+ 
     margin: 0px 7.5px;
 }
 

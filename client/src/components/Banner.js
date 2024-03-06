@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Banner({images}){
     
@@ -20,6 +20,23 @@ function Banner({images}){
             </ul>
         )
     }
+
+    //change banner every x time
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          setCurrentImageIndex((prevIndex) => {
+            if (prevIndex !== images.length - 1) {
+              //if not the last banner
+              return prevIndex + 1;
+            } else {
+              //if is the last banner
+              return 0;
+            }
+          });
+        }, 10000); // 10 seconds
+        return () => clearInterval(intervalId);
+      }, [images.length]);
+
 
     const displayContent = (
         <div id="banner">

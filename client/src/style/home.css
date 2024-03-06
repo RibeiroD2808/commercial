@@ -1,12 +1,5 @@
-/*                  carousel.js */
 
-.carouselDiv{
-    display: flex;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
-
+/*                              banner */
 #banner{
     background-color: aqua;
     width: 70%;
@@ -46,3 +39,39 @@
 .active{
     background-color: rgba(0, 0, 0, 0.4) !important;
 }
+
+/*                      carousel.js */
+
+.carouselDiv{
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+    justify-content: center;
+}
+
+.carouselDiv > button{
+    width: 2.5%;
+    margin: 0px 1.25%;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: max-content;
+}
+
+#nextButton{
+    right: 0px;
+}
+
+#caroucelProducts{
+    display: flex;
+    width: auto;
+    gap: 10px;
+    padding: 0;
+    margin: 0px;
+    width: 80%;
+    justify-content: space-around;
+}
+
+#caroucelProducts li{
+    width: 25%;
+}
+

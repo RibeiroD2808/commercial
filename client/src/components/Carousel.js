@@ -16,14 +16,14 @@ function Carousel( {products, productsPerPage} ){
       
     function Content () {
         return (
-        <ul className='productsUl'>
+        <ul id='caroucelProducts'>
             {visibleProducts .map((item) => (
             <Product key={item.id} product={item}/>
             ))}
         </ul>        
         )
     }
-
+    
     function moveCarousel(add){
         if(add && currentSliceIndex   < productscurrentSliceIndex   - productsPerPage)
             setCurrentSliceIndex  (currentSliceIndex   + 1)
@@ -34,11 +34,11 @@ function Carousel( {products, productsPerPage} ){
 
     const displayContent = (
         <div className='carouselDiv'>
-            <button onClick={() => moveCarousel(false)}>Prev</button>
-            <div id='carouselProducts'>
-                <Content />
-            </div>
-            <button onClick={() => moveCarousel(true)}>Next</button>
+            <button onClick={() => moveCarousel(false)}>&lt;</button>
+
+            <Content />
+
+            <button id='nextButton' onClick={() => moveCarousel(true)}>&gt;</button>
         </div>
     );
 
