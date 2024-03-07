@@ -4,7 +4,6 @@ import { FaSortNumericDown } from "react-icons/fa";
 function Gallery({images}){
 
     const[selectedImage, setSelectedimage] = useState(0);
-    console.log(images);
 
     function handleOnClick(value){
         
@@ -14,14 +13,21 @@ function Gallery({images}){
             setSelectedimage(selectedImage + value);
     }
 
+    function handleOnClickImage(value){
+        setSelectedimage(value);    
+        console.log(value);
+    }
+
     const displayContent = images ? (
         <div className="gallery">
-            <button onClick={() => handleOnClick(-1)} ></button>
-            <img src={'img/' + images[selectedImage]}></img>
-            <button onClick={() => handleOnClick(1)} ></button>
+            <div>
+                <button onClick={() => handleOnClick(-1)} ></button>
+                <img src={'img/' + images[selectedImage]}></img>
+                <button onClick={() => handleOnClick(1)} ></button>
+            </div>
             <ul className="galleryImagesList">
                 {images.map((item, key) => (
-                <img key={key} src={'img/' + item}></img>
+                    <img key={key} onClick={() => handleOnClickImage(key)} className={key === selectedImage ? 'selected' : ''} src={'img/' + item}></img>
                 ))}
             </ul>
         </div>

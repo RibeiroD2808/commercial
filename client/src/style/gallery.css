@@ -1,4 +1,14 @@
-.gallery > img{
+.gallery{
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery > div{
+    display: flex;
+    align-items: center;
+}
+
+.gallery > div > img{
     height: 500px;
     width: 500px;
 }
@@ -13,6 +23,12 @@
     width: 100px;
 }
 
-button{
-    height: 20px;   
+.gallery button{
+    height: 40px;
+    width: 20px;   
+    margin: 5px;
+}
+
+.selected{
+    filter: brightness(0.5);
 }

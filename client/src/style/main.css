@@ -30,23 +30,3 @@ select{
 
 
 
-/*                  product.js */
-.productDiv{
-    display: flex;
-    flex-direction: column;
-}
-
-.productDiv a{
-    display: flex;
-    flex-direction: column;
-    height: 90%;
-    gap: 12px;
-    padding: 10px;
-}
-
-.productDiv img{
-    margin: 0px auto;
-    height: 200px;
-    width: 200px;
-}
-

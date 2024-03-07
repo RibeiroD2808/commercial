@@ -1,4 +1,13 @@
 #productPageDiv{
     margin: 40px auto ;
     width: 60%;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
 }
+
+#productPageGallery > div{
+    margin: auto;
+}
+
+
